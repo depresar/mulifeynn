@@ -53,35 +53,35 @@ a{color:inherit}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* ---------- Шапка ---------- */
-.hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:40;transition:background .35s,color .35s,box-shadow .35s;color:#fff}
-.hdr.solid{background:var(--paper);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:40;transition:color .3s;color:#fff;pointer-events:none}
+.hdr button{pointer-events:auto}
+.hdr.dark{color:var(--ink)}
 .hdr__in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:76px}
-.hdr__nav{display:flex;gap:28px;font-size:14px}
-.hdr__nav button:hover{opacity:.6}
+.hdr__left{display:flex;align-items:center;gap:10px}
 .hdr__logo img{height:28px;width:auto;transition:filter .35s}
-.hdr:not(.solid) .hdr__logo img{filter:invert(1)}
+.hdr:not(.dark) .hdr__logo img{filter:invert(1)}
 .hdr__right{display:flex;justify-content:flex-end;align-items:center;gap:6px}
 .ib{position:relative;width:40px;height:40px;display:grid;place-items:center}
 .ib:hover{opacity:.6}
 .ib svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4}
 .ib sup{position:absolute;top:4px;right:2px;font-size:10px;font-weight:500}
-.burger{width:44px;height:40px;display:grid;place-content:center;gap:7px;margin-left:8px}
+.burger{width:44px;height:40px;display:grid;place-content:center;gap:7px;margin-left:-6px}
 .burger::before,.burger::after{content:"";width:30px;height:1.5px;background:currentColor;display:block}
 .burger:hover{opacity:.6}
-@media(max-width:899px){.hdr__nav{display:none}.hdr__in{grid-template-columns:auto 1fr;height:64px}.hdr__logo img{height:22px}.ib.search{display:none}}
+@media(max-width:899px){.hdr__in{height:64px}.hdr__logo img{height:22px}.hdr__left{gap:2px}.hdr__right{gap:0}}
 
 /* ---------- Боковое меню ---------- */
 .side{position:fixed;inset:0;z-index:80;visibility:hidden}
 .side.open{visibility:visible}
 .side__veil{position:absolute;inset:0;background:rgba(17,17,17,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;transition:opacity .5s}
 .side.open .side__veil{opacity:1}
-.side__photo{position:absolute;inset:0 min(486px,100%) 0 0;overflow:hidden;opacity:0;transition:opacity .6s .1s}
+.side__photo{position:absolute;inset:0 0 0 min(486px,100%);overflow:hidden;opacity:0;transition:opacity .6s .1s}
 .side.open .side__photo{opacity:1}
 .side__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .6s,transform 1.2s}
 .side__photo img.on{opacity:1;transform:none}
-.side__cap{position:absolute;left:32px;bottom:32px;color:#fff;font-size:clamp(34px,4vw,56px);line-height:1;text-shadow:0 2px 30px rgba(0,0,0,.25)}
+.side__cap{position:absolute;right:32px;bottom:32px;color:#fff;font-size:clamp(34px,4vw,56px);line-height:1;text-shadow:0 2px 30px rgba(0,0,0,.25)}
 @media(max-width:899px){.side__photo{display:none}}
-.side__panel{position:absolute;top:0;right:0;bottom:0;width:min(486px,100%);background:var(--ink-2);color:#eae6e3;display:flex;flex-direction:column;gap:28px;padding:calc(22px + env(safe-area-inset-top,0px)) max(34px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) 34px;overflow-y:auto;transform:translateX(100%);transition:transform .55s cubic-bezier(.7,0,.2,1)}
+.side__panel{position:absolute;top:0;left:0;bottom:0;width:min(486px,100%);background:var(--ink-2);color:#eae6e3;display:flex;flex-direction:column;gap:28px;padding:calc(22px + env(safe-area-inset-top,0px)) 34px calc(28px + env(safe-area-inset-bottom,0px)) max(34px,env(safe-area-inset-left,0px));overflow-y:auto;transform:translateX(-100%);transition:transform .55s cubic-bezier(.7,0,.2,1)}
 .side.open .side__panel{transform:none}
 .side__top{display:flex;justify-content:space-between;align-items:center}
 .side__top img{height:26px;width:auto}
@@ -129,26 +129,24 @@ section{scroll-margin-top:76px}
 .filters button{padding:6px 0;border-bottom:1.5px solid transparent;color:var(--muted)}
 .filters button:hover{color:var(--ink)}
 .filters button[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);padding:1px 0 0 1px}
 @media(max-width:1099px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:699px){.grid{grid-template-columns:repeat(2,1fr)}}
-.card{position:relative;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:box-shadow .25s}
-.card:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+@media(max-width:699px){.grid{grid-template-columns:repeat(2,1fr);row-gap:56px}}
+.card{position:relative;border:1px solid var(--line);margin:-1px 0 0 -1px;transition:border-color .25s;background:var(--paper)}
+.card:hover{border-color:var(--ink);z-index:1}
 .card.hide{display:none}
 .card__open{display:flex;flex-direction:column;width:100%;text-align:left}
-.card__img{position:relative;aspect-ratio:1/1.12;overflow:hidden;background:var(--blush)}
-.card__img img{width:100%;height:100%;object-fit:cover;transition:opacity .45s,transform 1s cubic-bezier(.2,.7,.2,1)}
-.card__img img+img{position:absolute;inset:0;opacity:0}
-.card:hover .card__img img+img{opacity:1}
-.card:hover .card__img img{transform:scale(1.03)}
+.card__img{position:relative;aspect-ratio:1/1.12;overflow:hidden;background:var(--paper)}
+.card__img img{width:100%;height:100%;object-fit:contain;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.card:hover .card__img img{transform:scale(1.04)}
 .card__tag{position:absolute;left:16px;top:20px;font-size:20px;line-height:1;color:var(--ink)}
-.card__fav{position:absolute;top:18px;right:18px;z-index:2;width:48px;height:48px;border-radius:50%;background:var(--paper);display:grid;place-items:center;box-shadow:0 1px 0 rgba(0,0,0,.04)}
-.card__fav svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:1.4;transition:fill .2s}
+.card__fav{position:absolute;top:18px;right:18px;z-index:2;width:52px;height:52px;border-radius:50%;background:var(--paper);display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line)}
+.card__fav svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:1.4;transition:fill .2s}
 .card__fav[aria-pressed="true"] svg{fill:var(--ink)}
 .card__body{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:18px 16px 22px}
 .card__name{font:500 16px/1.3 var(--f-body)}
 .card__price{font:500 16px/1 var(--f-body);white-space:nowrap;font-variant-numeric:tabular-nums}
-@media(max-width:699px){.card__fav{width:38px;height:38px;top:10px;right:10px}.card__fav svg{width:18px;height:18px}.card__body{flex-direction:column;gap:6px;padding:12px 12px 16px}.card__name,.card__price{font-size:14px}.card__tag{left:12px;top:14px;font-size:17px}}
+@media(max-width:699px){.card__fav{width:44px;height:44px;top:12px;right:12px}.card__fav svg{width:21px;height:21px}.card__body{gap:8px;padding:10px 10px 14px}.card__name,.card__price{font-size:14px}.card__price{font-size:15px}}
 .empty{grid-column:1/-1;padding:56px 16px;text-align:center;color:var(--muted);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
 .empty .it{display:block;font-size:30px;color:var(--ink);margin-bottom:6px}
 .more{display:flex;justify-content:center;padding-block:36px 0}
@@ -234,8 +232,8 @@ section{scroll-margin-top:76px}
 .modal__box{position:relative;width:min(1000px,100%);max-height:calc(100% - 16px);overflow:auto;background:var(--paper);display:grid;grid-template-columns:1fr;transform:translateY(16px);transition:transform .3s}
 .modal.open .modal__box{transform:none}
 @media(min-width:760px){.modal__box{grid-template-columns:1.1fr 1fr}}
-.modal__img{background:var(--blush);aspect-ratio:1/1.12}
-.modal__img img{width:100%;height:100%;object-fit:cover}
+.modal__img{background:var(--paper);aspect-ratio:1/1.12}
+.modal__img img{width:100%;height:100%;object-fit:contain}
 .modal__info{padding:clamp(24px,3vw,44px);display:grid;gap:18px;align-content:start}
 .modal__info h3{margin:0;font-size:clamp(36px,3.6vw,50px);line-height:1}
 .modal__price{font:500 18px/1 var(--f-body)}
@@ -264,7 +262,7 @@ section{scroll-margin-top:76px}
 .drawer__x::after{transform:rotate(-45deg)}
 .drawer__list{flex:1;overflow-y:auto;padding:0 24px}
 .item{display:grid;grid-template-columns:88px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
-.item img{width:88px;height:104px;object-fit:cover;background:var(--blush)}
+.item img{width:88px;height:104px;object-fit:contain;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
 .item__info{display:grid;gap:6px;align-content:start;min-width:0}
 .item__name{font-weight:500}
 .item__meta{font-size:13px;color:var(--muted)}
@@ -306,17 +304,14 @@ section{scroll-margin-top:76px}
 
 <header class="hdr" id="hdr">
   <div class="pad hdr__in">
-    <nav class="hdr__nav" aria-label="Быстрые ссылки">
-      <button data-go="catalog">Каталог</button>
-      <button data-go="about">О бренде</button>
-      <button data-go="buyers">Покупателям</button>
-    </nav>
+    <div class="hdr__left">
+      <button class="burger" id="menuOpen" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"></button>
+      <button class="ib search" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="10" r="6.5"/><path d="M11 16.5V22"/></svg></button>
+    </div>
     <button class="hdr__logo" data-go="top" aria-label="mulifeyn — на главную"><img src="img/logo.svg" alt="mulifeyn" width="144" height="28"></button>
     <div class="hdr__right">
-      <button class="ib search" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="10" r="6.5"/><path d="M11 16.5V22"/></svg></button>
       <button class="ib" id="favOpen" aria-label="Избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg><sup id="favN">0</sup></button>
       <button class="ib" id="cartOpen" aria-label="Корзина"><svg viewBox="0 0 24 24"><path d="M4.5 8.5h15l-1.2 12h-12.6z"/><path d="M8.5 8.5V7a3.5 3.5 0 0 1 7 0v1.5"/></svg><sup id="cartN">0</sup></button>
-      <button class="burger" id="menuOpen" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"></button>
     </div>
   </div>
 </header>
@@ -333,8 +328,8 @@ section{scroll-margin-top:76px}
   </div>
   <aside class="side__panel">
     <div class="side__top">
-      <img src="img/logo-white.svg" alt="mulifeyn">
       <button class="side__x" id="menuClose" aria-label="Закрыть меню"></button>
+      <img src="img/logo-white.svg" alt="mulifeyn">
     </div>
     <nav class="nav" aria-label="Основное меню">
       <button data-go="top" data-k="def" data-cap="mulifeyn">Главная</button>
@@ -378,7 +373,7 @@ section{scroll-margin-top:76px}
 
 <main id="top">
   <!-- Первый экран -->
-  <section class="hero" aria-label="Главный экран">
+  <section class="hero" data-hdr="light" aria-label="Главный экран">
     <img src="img/hero-rings.jpg" alt="Фарфоровые кольца mulifeyn с ручной росписью и золотыми сердцами">
     <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" poster="video/hero-mobile-poster.jpg" aria-hidden="true"></video>
     <div class="hero__foot">
@@ -396,11 +391,11 @@ section{scroll-margin-top:76px}
       <p>Каждое изделие лепится и расписывается вручную, поэтому двух одинаковых не бывает</p>
       <div class="filters" role="group" aria-label="Категории" id="filters"></div>
     </div>
-    <div class="grid" id="grid"></div>
+    <div class="pad"><div class="grid" id="grid"></div></div>
   </section>
 
   <!-- Новая коллекция -->
-  <section class="coll" aria-labelledby="collT">
+  <section class="coll" data-hdr="light" aria-labelledby="collT">
     <img src="img/collection-necklaces.jpg" alt="Ожерелья mulifeyn: коралловые бусины с фарфоровым тюльпаном и голубые бусины с бусиной-сердцем" loading="lazy">
     <div class="coll__foot">
       <h2 class="it" id="collT">Новая коллекция</h2>
@@ -411,7 +406,7 @@ section{scroll-margin-top:76px}
 
   <!-- О бренде -->
   <section class="about" id="about" aria-labelledby="aboutT">
-    <div class="about__img"><img src="img/necklaces.jpg" alt="Фарфоровая бусина с красными сердцами и золотой замок" loading="lazy"></div>
+    <div class="about__img" data-hdr="light-m"><img src="img/necklaces.jpg" alt="Фарфоровая бусина с красными сердцами и золотой замок" loading="lazy"></div>
     <div class="about__txt pad">
       <h2 class="it" id="aboutT">О бренде</h2>
       <p>Все изделия изготавливаются из фарфора кропотливо вручную и проходят много этапов создания, прежде чем обретут свою конечную форму.</p>
@@ -478,7 +473,7 @@ section{scroll-margin-top:76px}
 
   <!-- Контакты + подписка -->
   <section class="split" id="contacts" aria-labelledby="conT">
-    <div class="split__img"><img src="img/split-rings.jpg" alt="Фарфоровые кольца mulifeyn" loading="lazy"></div>
+    <div class="split__img" data-hdr="light-m"><img src="img/split-rings.jpg" alt="Фарфоровые кольца mulifeyn" loading="lazy"></div>
     <div class="split__form pad">
       <img class="logo" src="img/logo.svg" alt="mulifeyn" loading="lazy">
       <h2 class="it" id="conT" style="margin:0;font-size:clamp(30px,3vw,42px);line-height:1.1">Узнавайте первыми о новых изделиях и предзаказах</h2>
@@ -620,25 +615,27 @@ setVideo();mq.addEventListener?mq.addEventListener('change',setVideo):mq.addList
 
 /* ---------- Шапка: прозрачная на первом экране ---------- */
 const hdr=$('#hdr');
-const heroEl=document.querySelector('.hero');
-const onScroll=()=>hdr.classList.toggle('solid',scrollY>heroEl.offsetHeight-hdr.offsetHeight);
+const photoAll=$$('[data-hdr]'),narrow=matchMedia('(max-width: 899px)');
+const onScroll=()=>{const y=hdr.getBoundingClientRect().top+hdr.offsetHeight/2;
+  const overPhoto=photoAll.filter(el=>el.dataset.hdr==='light'||narrow.matches).some(el=>{const r=el.getBoundingClientRect();return r.top<=y&&r.bottom>=y});
+  hdr.classList.toggle('dark',!overPhoto)};
 addEventListener('scroll',onScroll,{passive:true});onScroll();
 
 /* ---------- Товары (примерные) ---------- */
 const TYPES={ring:'Кольцо',bracelet:'Браслет',necklace:'Ожерелье',earrings:'Серьги'};
 const P=[
- {id:1,t:'ring',n:'Горячее сердце',p:3900,img:'ring-red-heart',img2:'ring-amore-heart',tag:'Новинка',d:'Белое кольцо с объёмным красным сердцем и золотыми лучами.'},
- {id:2,t:'ring',n:'Ласточка',p:4600,img:'ring-bird',img2:'ring-blue-heart',d:'Печатка с кобальтовой ласточкой в золотой рамке и лучами.'},
- {id:3,t:'ring',n:'Синее сердце',p:4200,img:'ring-blue-heart',img2:'ring-bird',d:'Кобальтовые полосы и сердце в золотом контуре.'},
- {id:4,t:'ring',n:'Золотое сердце',p:4400,img:'ring-gold-heart',img2:'ring-red-heart',tag:'Хит',d:'Красные полосы и объёмное сердце, покрытое золотом.'},
- {id:5,t:'ring',n:'Amore',p:4200,img:'ring-amore-heart',img2:'ring-gold-heart',d:'Красное сердце в золотом контуре на белом фарфоре.'},
- {id:6,t:'ring',n:'Арлекин',p:3700,img:'ring-harlequin',img2:'ring-star',pre:true,d:'Красные ромбы с золотыми точками.'},
- {id:7,t:'ring',n:'OK',p:3500,img:'ring-ok',img2:'ring-q',d:'Сердце с надписью и прозрачной бусиной.'},
- {id:8,t:'ring',n:'Королева',p:3500,img:'ring-q',img2:'ring-ok',pre:true,d:'Буква Q и красные сердечки.'},
- {id:9,t:'ring',n:'Звёздная ночь',p:3800,img:'ring-star',img2:'ring-harlequin',d:'Глубокий кобальт и белые звёзды.'},
- {id:10,t:'necklace',n:'Тюльпан',p:5200,img:'necklace-coral',img2:'necklace-heart',tag:'Новинка',d:'Коралловые бусины и белый фарфоровый тюльпан.'},
- {id:11,t:'necklace',n:'Сердца',p:5600,img:'necklace-heart',img2:'necklace-blue',d:'Голубые бусины, фарфоровая бусина с сердцами и золотой замок-тоггл.'},
- {id:12,t:'necklace',n:'Небо',p:4900,img:'necklace-blue',img2:'necklace-heart',pre:true,d:'Нежно-голубые бусины и золотая фурнитура.'},
+ {id:1,t:'ring',n:'«Сердце в золоте»',p:4200,img:'p-ring',d:'Белое кольцо с красными полосами и сердцем в золотом контуре.'},
+ {id:2,t:'necklace',n:'«Жемчужный шар»',p:6800,img:'p-necklace',d:'Речной жемчуг, голубой ангелит и фарфоровая бусина с кобальтовыми полосами на золотом замке.'},
+ {id:3,t:'ring',n:'«Amore»',p:3900,img:'p-ring',d:'Сердце в золотом контуре и тонкая красная роспись.'},
+ {id:4,t:'necklace',n:'«Ривьера»',p:7200,img:'p-necklace',d:'Жемчуг, голубые бусины и подвеска из расписного фарфора.'},
+ {id:5,t:'ring',n:'«Валентинка»',p:4500,img:'p-ring',pre:true,d:'Кольцо с сердцем под заказ, изготовление около месяца.'},
+ {id:6,t:'necklace',n:'«Морской бриз»',p:6500,img:'p-necklace',d:'Нежный жемчуг и фарфоровая бусина в морскую полоску.'},
+ {id:7,t:'ring',n:'«Красная нить»',p:3700,img:'p-ring',d:'Красные полосы и сердце, покрытое золотом.'},
+ {id:8,t:'necklace',n:'«Голубая лагуна»',p:6900,img:'p-necklace',pre:true,d:'Ожерелье с голубыми бусинами под заказ.'},
+ {id:9,t:'ring',n:'«Любовь»',p:4100,img:'p-ring',d:'Фарфор, ручная роспись, золотое сердце.'},
+ {id:10,t:'necklace',n:'«Барокко»',p:7500,img:'p-necklace',d:'Барочный жемчуг и фарфоровый шар с росписью.'},
+ {id:11,t:'ring',n:'«Полоска»',p:3500,img:'p-ring',d:'Лаконичные красные полосы и сердце.'},
+ {id:12,t:'necklace',n:'«Жемчуг и кобальт»',p:7100,img:'p-necklace',d:'Жемчуг, золотая фурнитура и кобальтовая роспись.'},
 ];
 const rub=n=>n.toLocaleString('ru-RU')+' р.';
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg>';
@@ -646,9 +643,9 @@ const grid=$('#grid');
 grid.innerHTML=P.map(p=>`<div class="card" data-t="${p.t}">
   <button class="card__fav" aria-pressed="false" aria-label="В избранное: ${p.n}" data-fav="${p.id}">${heart}</button>
   <button class="card__open" data-open="${p.id}">
-   <span class="card__img"><img src="img/${p.img}.jpg" alt="${TYPES[p.t]} «${p.n}»" loading="lazy"><img src="img/${p.img2}.jpg" alt="" loading="lazy">
+   <span class="card__img"><img src="img/${p.img}.jpg" alt="${TYPES[p.t]} ${p.n}" loading="lazy">
 </span>
-   <span class="card__body"><span class="card__name">${TYPES[p.t]} «${p.n}»</span><span class="card__price">${rub(p.p)}</span></span>
+   <span class="card__body"><span class="card__name">${TYPES[p.t]} ${p.n}</span><span class="card__price">${rub(p.p)}</span></span>
   </button></div>`).join('')+`<div class="empty" id="empty" hidden><span class="it">Скоро здесь</span>Изделия появятся после съёмки. Предзаказ можно оформить в Telegram @mulifeynn</div>`;
 
 const F=[['all','Все'],['ring','Кольца'],['bracelet','Браслеты'],['necklace','Ожерелья'],['earrings','Серьги']];
@@ -675,13 +672,13 @@ function addToCart(id,size){const k=id+'|'+(size||'');cart.set(k,(cart.get(k)||0
 function renderFav(){$('#favN').textContent=favs.size;const L=$('#favList');
   if(!favs.size){L.innerHTML='<div class="drawer__empty"><span class="it">Здесь пока пусто</span>Нажмите на сердечко у изделия, чтобы сохранить его<button class="link" data-go="catalog" style="color:var(--ink)">Перейти в каталог</button></div>';return}
   L.innerHTML=[...favs].map(id=>{const p=byId(id);return `<div class="item"><img src="img/${p.img}.jpg" alt=""><div class="item__info">
-   <span class="item__name">${TYPES[p.t]} «${p.n}»</span><span class="item__meta">${rub(p.p)}${p.pre?' · предзаказ':''}</span>
+   <span class="item__name">${TYPES[p.t]} ${p.n}</span><span class="item__meta">${rub(p.p)}${p.pre?' · предзаказ':''}</span>
    <div class="item__row">${p.pre?'<span></span>':`<button class="item__add" data-tocart="${id}">В корзину</button>`}<button class="item__del" data-unfav="${id}">Удалить</button></div></div></div>`}).join('')}
 function renderCart(){let n=0,sum=0;cart.forEach((q,k)=>{n+=q;sum+=q*byId(+k.split('|')[0]).p});
   $('#cartN').textContent=n;$('#cartSum').textContent=rub(sum);$('#cartFoot').hidden=!n;const L=$('#cartList');
   if(!n){L.innerHTML='<div class="drawer__empty"><span class="it">Корзина пуста</span>Загляните в каталог: там много ярких изделий<button class="link" data-go="catalog" style="color:var(--ink)">Перейти в каталог</button></div>';return}
   L.innerHTML=[...cart].map(([k,q])=>{const[id,sz]=k.split('|'),p=byId(+id);return `<div class="item"><img src="img/${p.img}.jpg" alt=""><div class="item__info">
-   <span class="item__name">${TYPES[p.t]} «${p.n}»</span><span class="item__meta">${sz?'Размер '+sz+' · ':''}${rub(p.p)}</span>
+   <span class="item__name">${TYPES[p.t]} ${p.n}</span><span class="item__meta">${sz?'Размер '+sz+' · ':''}${rub(p.p)}</span>
    <div class="item__row"><div class="qty"><button data-q="-1" data-k="${k}" aria-label="Меньше">−</button><span>${q}</span><button data-q="1" data-k="${k}" aria-label="Больше">+</button></div>
    <button class="item__del" data-del="${k}">Удалить</button></div></div></div>`}).join('')}
 const dr={cart:$('#cartDr'),fav:$('#favDr')};
@@ -693,7 +690,7 @@ Object.values(dr).forEach(d=>d.addEventListener('click',e=>{const t=e.target;
   const q=t.closest('[data-q]');if(q){const k=q.dataset.k,v=(cart.get(k)||0)+(+q.dataset.q);v>0?cart.set(k,v):cart.delete(k);renderCart();return}
   const del=t.closest('[data-del]');if(del){cart.delete(del.dataset.del);renderCart();return}
   const uf=t.closest('[data-unfav]');if(uf){toggleFav(+uf.dataset.unfav);return}
-  const tc=t.closest('[data-tocart]');if(tc){const p=byId(+tc.dataset.tocart);addToCart(p.id,p.t==='ring'?'17':'');toast(`«${p.n}» в корзине`)}}));
+  const tc=t.closest('[data-tocart]');if(tc){const p=byId(+tc.dataset.tocart);addToCart(p.id,p.t==='ring'?'17':'');toast(`${p.n} в корзине`)}}));
 $('#checkout').onclick=()=>{closeDr();toast('Это макет: здесь будет оформление заказа')};
 addEventListener('keydown',e=>{if(e.key==='Escape'&&Object.values(dr).some(d=>d.classList.contains('open')))closeDr()});
 renderFav();renderCart();
@@ -701,7 +698,7 @@ renderFav();renderCart();
 /* ---------- Окно товара ---------- */
 const modal=$('#modal');let cur,lastFocus;
 function openModal(id){cur=P.find(p=>p.id===id);lastFocus=document.activeElement;
-  $('#mImg').src=`img/${cur.img}.jpg`;$('#mImg').alt=`${TYPES[cur.t]} «${cur.n}»`;
+  $('#mImg').src=`img/${cur.img}.jpg`;$('#mImg').alt=`${TYPES[cur.t]} ${cur.n}`;
   $('#mType').textContent=TYPES[cur.t]+(cur.pre?' · под заказ':' · в наличии');$('#mName').textContent=cur.n;$('#mPrice').textContent=rub(cur.p);$('#mDesc').textContent=cur.d+' Фарфор, ручная роспись.';
   $('#mSizesWrap').hidden=cur.t!=='ring';
   $('#mSizes').innerHTML=['15','16','16,5','17','17,5','18','19'].map((s,i)=>`<button aria-pressed="${i===3}">${s}</button>`).join('');
@@ -710,7 +707,7 @@ function openModal(id){cur=P.find(p=>p.id===id);lastFocus=document.activeElement
 function closeModal(){modal.classList.remove('open');document.body.classList.remove('lock');lastFocus&&lastFocus.focus()}
 $('#mSizes').addEventListener('click',e=>{const b=e.target.closest('button');if(b)$$('#mSizes button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
 $('#mClose').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
-$('#mAdd').onclick=()=>{const sz=cur.t==='ring'?($('#mSizes [aria-pressed=true]')||{}).textContent:'';addToCart(cur.id,sz);closeModal();toast(`«${cur.n}» в корзине`)};
+$('#mAdd').onclick=()=>{const sz=cur.t==='ring'?($('#mSizes [aria-pressed=true]')||{}).textContent:'';addToCart(cur.id,sz);closeModal();toast(`${cur.n} в корзине`)};
 $('#mPre').onclick=()=>{closeModal();toast('Заявка на предзаказ: напишем вам в Telegram')};
 
 /* ---------- Боковое меню ---------- */
