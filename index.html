@@ -110,6 +110,8 @@ a{color:inherit}
 .hero{position:relative;height:clamp(480px,66vh,680px);overflow:hidden;background:var(--blush);color:#fff}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 24s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-1%,1%)}}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+@media(max-width:699px){.hero__video{display:block}.hero{height:clamp(520px,78vh,720px)}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 25%,rgba(0,0,0,0) 40%,rgba(0,0,0,.45))}
 .hero__title{margin:0 0 4px;font-size:clamp(44px,6.6vw,100px);line-height:.95;text-wrap:balance}
 .hero__foot{position:absolute;z-index:1;left:0;right:0;bottom:clamp(32px,6vh,60px);display:grid;justify-items:center;gap:18px;text-align:center;padding-inline:16px}
@@ -380,6 +382,7 @@ section{scroll-margin-top:76px}
   <!-- Первый экран -->
   <section class="hero" aria-label="Главный экран">
     <img src="site/img/hero-rings.jpg" alt="Фарфоровые кольца mulifeyn с ручной росписью и золотыми сердцами">
+    <video class="hero__video" id="heroVideo" muted loop playsinline preload="none" poster="site/video/hero-mobile-poster.jpg" aria-hidden="true"></video>
     <div class="hero__foot">
       <h1 class="hero__title it">Фарфор, расписанный вручную</h1>
       <p>Кольца, браслеты, ожерелья и серьги из фарфора с росписью, золотом и платиной</p>
@@ -611,6 +614,11 @@ const minShow=reduce?300:2400;
 const ready=()=>setTimeout(hideLoader,Math.max(0,minShow-(performance.now()-t0)));
 document.readyState==='complete'?ready():addEventListener('load',ready);
 setTimeout(hideLoader,5000);loader.addEventListener('click',hideLoader);
+
+/* ---------- Видео на первом экране (пока только мобильное) ---------- */
+const hv=$('#heroVideo'),mq=matchMedia('(max-width: 699px)');
+function setVideo(){if(mq.matches){if(!hv.getAttribute('src')){hv.src='site/video/hero-mobile.mp4'}if(!reduce)hv.play().catch(()=>{})}else hv.pause()}
+setVideo();mq.addEventListener?mq.addEventListener('change',setVideo):mq.addListener(setVideo);
 
 /* ---------- Шапка: прозрачная на первом экране ---------- */
 const hdr=$('#hdr');
