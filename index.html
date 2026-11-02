@@ -33,7 +33,9 @@ body{background:var(--paper);color:var(--ink);font:400 15px/1.55 var(--f-body);-
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
 body.lock{overflow:hidden}
 img{display:block;max-width:100%}
-button,input{font:inherit;color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}
 button{background:none;border:0;cursor:pointer;padding:0}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
@@ -253,6 +255,46 @@ section{scroll-margin-top:76px}
 .modal__mini{display:grid;gap:8px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
 
 
+/* ---------- Ссылки на главном ---------- */
+.hero__links{display:flex;flex-wrap:wrap;gap:12px 28px}
+
+/* ---------- Поиск ---------- */
+.srch{position:fixed;inset:0;z-index:86;visibility:hidden}
+.srch.open{visibility:visible}
+.search__veil{position:absolute;inset:0;background:rgba(17,17,17,.3);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .35s}
+.srch.open .search__veil{opacity:1}
+.search__panel{position:absolute;left:0;right:0;top:0;background:var(--paper);max-height:88vh;overflow-y:auto;transform:translateY(-100%);transition:transform .45s cubic-bezier(.7,0,.2,1);padding:calc(18px + env(safe-area-inset-top,0px)) var(--gut-r) 28px var(--gut)}
+.srch.open .search__panel{transform:none}
+.search__row{display:flex;align-items:center;gap:14px;max-width:900px;margin:0 auto;border-bottom:1px solid var(--ink)}
+.search__row svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;flex:none}
+.search__row input{flex:1;min-width:0;height:56px;border:0;background:transparent;font-size:18px;outline:none}
+.search__hint{max-width:900px;margin:16px auto 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.search__hint button{padding:6px 12px;box-shadow:inset 0 0 0 1px var(--line);font-size:13px;color:var(--ink)}
+.search__hint button:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.search__res{max-width:900px;margin:8px auto 0;display:grid}
+.res{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);text-align:left;width:100%}
+.res img{width:64px;height:72px;object-fit:contain;box-shadow:inset 0 0 0 1px var(--line)}
+.res span{font-size:14px}.res b{font-weight:500;font-size:14px;white-space:nowrap}
+.res:hover span{text-decoration:underline;text-underline-offset:3px}
+.search__none{padding:28px 0;color:var(--muted);font-size:14px}
+
+/* ---------- Индивидуальный заказ ---------- */
+.custom .modal__box{width:min(560px,100%);grid-template-columns:1fr}
+.custom__in{padding:clamp(28px,4vw,48px);display:grid;gap:18px}
+.custom__in h3{margin:0;font-size:var(--h);line-height:1.15}
+.custom__in>p{margin:0;color:var(--muted);font-size:14px}
+.fld{display:grid;gap:6px}
+.fld label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fld input,.fld textarea{border:0;border-bottom:1px solid var(--ink);background:transparent;font-size:16px;padding:10px 2px;border-radius:0;resize:vertical}
+.fld textarea{min-height:84px;border:1px solid var(--line);padding:12px}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--ink)}
+.fld.err input,.fld.err textarea{border-color:var(--glaze-red)}
+.fld small{color:var(--glaze-red);font-size:12px}
+.fld small:empty{display:none}
+.custom .btn{width:100%}
+.custom__ok{display:grid;gap:14px;justify-items:center;text-align:center;padding:24px 0}
+.custom__ok p{margin:0;color:var(--muted)}
+
 /* ---------- Корзина и избранное ---------- */
 .drawer{position:fixed;inset:0;z-index:85;visibility:hidden}
 .drawer.open{visibility:visible}
@@ -286,7 +328,7 @@ section{scroll-margin-top:76px}
 .drawer__foot small{color:var(--muted);font-size:12px}
 
 /* ---------- Куки и тост ---------- */
-.cookie{position:fixed;z-index:70;right:max(20px,env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));width:min(480px,calc(100% - 32px));background:var(--ink-2);color:#fff;padding:26px 52px 26px 30px;font-size:15px;line-height:1.5;display:grid;gap:16px;transform:translateY(20px);opacity:0;transition:opacity .4s,transform .4s}
+.cookie{position:fixed;z-index:70;right:max(28px,env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));background:var(--ink-2);color:#fff;padding:30px 60px 30px 34px;font-size:15px;line-height:1.5;display:grid;gap:16px;transform:translateY(20px);opacity:0;transition:opacity .4s,transform .4s}
 .cookie.show{opacity:1;transform:none}
 .cookie p{margin:0}
 .cookie u{text-underline-offset:3px}
@@ -299,7 +341,12 @@ section{scroll-margin-top:76px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- Единая аккуратная типографика ---------- */
-:root{--h:clamp(30px,2.9vw,44px);--t:15px;--t-s:13px}
+:root{--h:clamp(30px,2.9vw,44px);--t:15px;--t-s:13px;--frame:8px}
+@media(min-width:900px){:root{--frame:10px}}
+body{margin:0;padding-left:max(var(--frame),env(safe-area-inset-left,0px));padding-right:max(var(--frame),env(safe-area-inset-right,0px))}
+.hero{margin-top:var(--frame);height:calc(100vh - 2*var(--frame));height:calc(100svh - 2*var(--frame));min-height:500px}
+.hdr{left:var(--frame);right:var(--frame);top:calc(env(safe-area-inset-top,0px) + var(--frame))}
+.hdr__in{padding-left:max(18px,calc(var(--gut) - var(--frame)));padding-right:max(18px,calc(var(--gut-r) - var(--frame)))}
 body{font-size:var(--t)}
 .hero__title,.coll h2,.shead h2,.about__txt h2,.split__form h2{font-size:var(--h)!important;line-height:1.2!important}
 .hero__foot{gap:16px}
@@ -330,7 +377,7 @@ body{font-size:var(--t)}
   <div class="pad hdr__in">
     <div class="hdr__left">
       <button class="burger" id="menuOpen" aria-label="Открыть меню" aria-expanded="false" aria-controls="side"></button>
-      <button class="ib search" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="10" r="6.5"/><path d="M11 16.5V22"/></svg></button>
+      <button class="ib search" id="searchOpen" aria-label="Поиск"><svg viewBox="0 0 24 24"><circle cx="11" cy="10" r="6.5"/><path d="M11 16.5V22"/></svg></button>
     </div>
     <button class="hdr__logo" data-go="top" aria-label="mulifeyn — на главную"><img src="site/img/logo.svg" alt="mulifeyn" width="144" height="28"></button>
     <div class="hdr__right">
@@ -378,6 +425,7 @@ body{font-size:var(--t)}
         </div>
       </details>
       <button data-go="about" data-k="about" data-cap="О бренде">О бренде</button>
+      <button data-custom data-k="about" data-cap="Индивидуальный заказ">Индивидуальный заказ</button>
       <button data-go="contacts" data-k="def" data-cap="Напишите нам">Контакты</button>
     </nav>
     <div class="side__contact">
@@ -403,7 +451,7 @@ body{font-size:var(--t)}
     <div class="hero__foot">
       <h1 class="hero__title it">Фарфор, расписанный вручную</h1>
       <p>Кольца, браслеты, ожерелья и серьги из фарфора с росписью, золотом и платиной</p>
-      <button class="link" data-go="catalog">Перейти в каталог</button>
+      <div class="hero__links"><button class="link" data-go="catalog">Перейти в каталог</button><button class="link" data-custom>Индивидуальный заказ</button></div>
     </div>
     <span class="video-note">Здесь будет видео с изделиями</span>
   </section>
@@ -434,6 +482,7 @@ body{font-size:var(--t)}
       <h2 class="it" id="aboutT">О бренде</h2>
       <p>Все изделия изготавливаются из фарфора кропотливо вручную и проходят много этапов создания, прежде чем обретут свою конечную форму.</p>
       <p class="about__quote it">Украшения mulifeyn созданы, чтобы просто дарить вам хорошее настроение и новый опыт</p>
+      <button class="btn btn--ghost" data-custom>Индивидуальный заказ</button>
       <div class="facts">
         <div><b>Фарфор</b><span>основа изделий</span></div>
         <div><b>Вручную</b><span>лепка и роспись</span></div>
@@ -528,6 +577,7 @@ body{font-size:var(--t)}
         <li><button data-go="catalog" data-filter="all">Каталог</button></li>
         <li><button data-go="about">О бренде</button></li>
         <li><button data-go="buyers">Покупателям</button></li>
+        <li><button data-custom>Индивидуальный заказ</button></li>
         <li><button data-go="contacts">Контакты</button></li>
       </ul>
       <ul>
@@ -572,6 +622,38 @@ body{font-size:var(--t)}
   </div>
 </div>
 
+<!-- Поиск -->
+<div class="srch" id="search" role="dialog" aria-modal="true" aria-label="Поиск">
+  <div class="search__veil" data-sclose></div>
+  <div class="search__panel">
+    <div class="search__row">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="10" r="6.5"/><path d="M11 16.5V22"/></svg>
+      <input type="search" id="searchInput" placeholder="Поиск по изделиям" aria-label="Поиск по изделиям" autocomplete="off">
+      <button class="drawer__x" data-sclose aria-label="Закрыть поиск"></button>
+    </div>
+    <div class="search__hint" id="searchHint">Часто ищут: <button data-q="кольцо">кольцо</button><button data-q="ожерелье">ожерелье</button><button data-q="сердце">сердце</button><button data-q="жемчуг">жемчуг</button></div>
+    <div class="search__res" id="searchRes"></div>
+  </div>
+</div>
+
+<!-- Индивидуальный заказ -->
+<div class="modal custom" id="custom" role="dialog" aria-modal="true" aria-labelledby="customT">
+  <div class="modal__box">
+    <button class="modal__x" data-cclose aria-label="Закрыть"></button>
+    <div class="custom__in" id="customIn">
+      <h3 class="it" id="customT">Индивидуальный заказ</h3>
+      <p>Расскажите, какое украшение хотите: роспись, цвет, надпись или размер. Мы свяжемся с вами и обсудим детали.</p>
+      <form id="customForm" novalidate style="display:grid;gap:18px">
+        <div class="fld"><label for="cName">Имя</label><input id="cName" autocomplete="name" placeholder="Как к вам обращаться"><small></small></div>
+        <div class="fld"><label for="cPhone">Телефон</label><input id="cPhone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><small></small></div>
+        <div class="fld"><label for="cText">Что хотите заказать</label><textarea id="cText" placeholder="Например: кольцо с синим сердцем и надписью, размер 17"></textarea><small></small></div>
+        <label class="chk" for="cAgree"><input type="checkbox" id="cAgree" checked><span>Я согласен(на) на обработку персональных данных и ознакомлен(а) с <u>политикой конфиденциальности</u></span></label>
+        <button class="btn" type="submit">Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Корзина -->
 <div class="drawer" id="cartDr" role="dialog" aria-modal="true" aria-labelledby="cartT">
   <div class="drawer__veil" data-dclose></div>
@@ -599,7 +681,6 @@ body{font-size:var(--t)}
 <div class="cookie" id="cookie" role="region" aria-label="Уведомление о куки" hidden>
   <button class="x" id="cookieX" aria-label="Закрыть"></button>
   <p>Мы используем файлы куки, чтобы сайт работал корректно и вам было удобно. Продолжая пользоваться сайтом, вы соглашаетесь с нашей <u>Политикой использования файлов куки</u>.</p>
-  <button class="btn" id="cookieOk">Хорошо</button>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -718,6 +799,38 @@ $('#checkout').onclick=()=>{closeDr();toast('Это макет: здесь бу�
 addEventListener('keydown',e=>{if(e.key==='Escape'&&Object.values(dr).some(d=>d.classList.contains('open')))closeDr()});
 renderFav();renderCart();
 
+/* ---------- Поиск ---------- */
+const srch=$('#search'),sIn=$('#searchInput'),sRes=$('#searchRes');
+function openSearch(){srch.classList.add('open');document.body.classList.add('lock');setTimeout(()=>sIn.focus(),350);runSearch()}
+function closeSearch(){srch.classList.remove('open');document.body.classList.remove('lock')}
+function runSearch(){const q=sIn.value.trim().toLowerCase();$('#searchHint').hidden=!!q;
+  if(!q){sRes.innerHTML='';return}
+  const hits=P.filter(p=>(TYPES[p.t]+' '+p.n+' '+p.d).toLowerCase().replace(/[«»]/g,'').includes(q));
+  sRes.innerHTML=hits.length?hits.map(p=>`<button class="res" data-sopen="${p.id}"><img src="site/img/${p.img}.jpg" alt=""><span>${TYPES[p.t]} ${p.n}</span><b>${rub(p.p)}</b></button>`).join('')
+    :`<div class="search__none">По запросу «${q.replace(/[<>&]/g,'')}» ничего не нашлось. Попробуйте «кольцо» или «жемчуг».</div>`}
+$('#searchOpen').onclick=openSearch;sIn.addEventListener('input',runSearch);
+srch.addEventListener('click',e=>{if(e.target.closest('[data-sclose]'))return closeSearch();
+  const h=e.target.closest('[data-q]');if(h){sIn.value=h.dataset.q;runSearch();sIn.focus();return}
+  const o=e.target.closest('[data-sopen]');if(o){closeSearch();openModal(+o.dataset.sopen)}});
+
+/* ---------- Индивидуальный заказ ---------- */
+const cst=$('#custom'),cIn=$('#customIn'),cFormHTML=cIn.innerHTML;
+function openCustom(){if(side.classList.contains('open'))closeMenu();cst.classList.add('open');document.body.classList.add('lock');setTimeout(()=>{const n=$('#cName');n&&n.focus()},250)}
+function closeCustom(){cst.classList.remove('open');document.body.classList.remove('lock');setTimeout(()=>{cIn.innerHTML=cFormHTML;bindCustom()},350)}
+document.addEventListener('click',e=>{if(e.target.closest('[data-custom]')){e.preventDefault();openCustom()}});
+cst.addEventListener('click',e=>{if(e.target===cst||e.target.closest('[data-cclose]'))closeCustom()});
+function bindCustom(){const f=$('#customForm');if(!f)return;
+  f.addEventListener('submit',e=>{e.preventDefault();let ok=true;
+    const chk=(id,test,msg)=>{const el=$(id),w=el.closest('.fld'),bad=!test(el.value.trim());w.classList.toggle('err',bad);w.querySelector('small').textContent=bad?msg:'';if(bad)ok=false};
+    chk('#cName',v=>v.length>1,'Напишите, как к вам обращаться');
+    chk('#cPhone',v=>v.replace(/\D/g,'').length>=10,'Введите номер телефона, например +7 900 000-00-00');
+    chk('#cText',v=>v.length>2,'Опишите коротко, что хотите заказать');
+    if(!$('#cAgree').checked){ok=false;toast('Нужно согласие на обработку данных')}
+    if(!ok)return;
+    cIn.innerHTML='<div class="custom__ok"><h3 class="it" style="margin:0;font-size:var(--h)">Спасибо!</h3><p>Заявка отправлена. Мы свяжемся с вами в Telegram или по телефону, чтобы обсудить детали.</p><p style="font-size:12px">Это макет: на готовом сайте заявка придёт на почту или в Telegram.</p><button class="btn" data-cclose style="width:auto">Хорошо</button></div>'})}
+bindCustom();
+addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(srch.classList.contains('open'))closeSearch();if(cst.classList.contains('open'))closeCustom()});
+
 /* ---------- Окно товара ---------- */
 const modal=$('#modal');let cur,lastFocus;
 function openModal(id){cur=P.find(p=>p.id===id);lastFocus=document.activeElement;
@@ -769,6 +882,6 @@ const ck=$('#cookie');
 function showCookie(){let seen=false;try{seen=localStorage.getItem('mf-cookie')==='1'}catch(_){}
   if(seen)return;ck.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>ck.classList.add('show')))}
 function hideCookie(){ck.classList.remove('show');setTimeout(()=>ck.hidden=true,400);try{localStorage.setItem('mf-cookie','1')}catch(_){}}
-$('#cookieOk').onclick=hideCookie;$('#cookieX').onclick=hideCookie;
+$('#cookieX').onclick=hideCookie;
 })();
 </script>
