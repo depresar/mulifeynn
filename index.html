@@ -343,6 +343,7 @@ section{scroll-margin-top:76px}
 /* ---------- Единая аккуратная типографика ---------- */
 :root{--h:clamp(30px,2.9vw,44px);--t:15px;--t-s:13px;--frame:8px}
 @media(min-width:900px){:root{--frame:10px}}
+.foot{margin-bottom:calc(var(--frame) + env(safe-area-inset-bottom,0px))}
 body{margin:0;padding-left:max(var(--frame),env(safe-area-inset-left,0px));padding-right:max(var(--frame),env(safe-area-inset-right,0px))}
 .hero{margin-top:var(--frame);height:calc(100vh - 2*var(--frame));height:calc(100svh - 2*var(--frame));min-height:500px}
 .hdr{left:var(--frame);right:var(--frame);top:calc(env(safe-area-inset-top,0px) + var(--frame))}
