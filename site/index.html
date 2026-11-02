@@ -1,0 +1,649 @@
+<title>mulifeyn</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="mulifeyn — фарфоровые украшения ручной работы">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: светлая витрина как белый фарфор. Чёрный шрифт и тонкие линии, фото на розовом фоне студии.
+   Акцент один — звёздочки цветов глазури (золото, кобальт, красный) в прелоадере и деталях. */
+:root{
+  --paper:#fdfbfa;      /* белый фарфор */
+  --ink:#1a0f08;        /* цвет логотипа */
+  --muted:#6f625b;
+  --line:#e7ddd8;
+  --blush:#efdcd2;      /* фон предметной съёмки */
+  --blush-2:#f6ebe5;
+  --gold:#c9a14a;
+  --cobalt:#25348c;
+  --glaze-red:#d4402f;
+  --f-display:"Cormorant","Times New Roman",serif;
+  --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gut-r:max(16px,env(safe-area-inset-right,0px));
+  --wrap:1440px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+body.lock{overflow:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut-r)}
+@media(min-width:900px){:root{--gut:max(32px,env(safe-area-inset-left,0px));--gut-r:max(32px,env(safe-area-inset-right,0px))}}
+.eyebrow{font:500 12px/1.2 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.h2{font:500 clamp(34px,5vw,64px)/1.02 var(--f-display);letter-spacing:-.01em;margin:0;text-wrap:balance}
+.h2 em{font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 26px;border-radius:999px;background:var(--ink);color:var(--paper);font:500 13px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;transition:transform .2s,background .2s}
+.btn:hover{background:#3a2a20}
+.btn--light{background:var(--paper);color:var(--ink)}
+.btn--light:hover{background:var(--blush-2)}
+.btn--line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.btn--line:hover{background:var(--ink);color:var(--paper)}
+.star{display:inline-block;width:1em;height:1em;vertical-align:-.1em}
+
+/* ---------- Прелоадер ---------- */
+.loader{position:fixed;inset:0;z-index:100;background:var(--paper);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
+.loader canvas{position:absolute;inset:0;width:100%;height:100%}
+.loader__logo{position:relative;width:min(56vw,320px);opacity:0;animation:logoIn 1s .2s ease forwards}
+.loader__note{position:absolute;bottom:calc(32px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;color:var(--muted);opacity:0;animation:logoIn 1s .6s ease forwards}
+.loader.done{opacity:0;visibility:hidden}
+@keyframes logoIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Шапка ---------- */
+.top{background:var(--ink);color:var(--paper);text-align:center;font-size:12px;letter-spacing:.06em;padding:8px var(--gut-r) 8px var(--gut)}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr__in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px}
+.hdr__left{display:flex;gap:28px}
+.hdr__left button{font:500 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+.hdr__left button:hover{opacity:.6}
+.hdr__logo img{height:26px;width:auto}
+.hdr__right{display:flex;justify-content:flex-end;align-items:center;gap:18px}
+.icon-btn{position:relative;width:36px;height:36px;display:grid;place-items:center;border-radius:50%}
+.icon-btn:hover{background:var(--blush-2)}
+.icon-btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.4}
+.badge{position:absolute;top:2px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--glaze-red);color:#fff;font:600 10px/16px var(--f-body);text-align:center}
+.badge[data-n="0"]{display:none}
+.menu-btn{display:flex;align-items:center;gap:12px;height:40px;padding:0 6px 0 16px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--ink);font:500 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+.menu-btn:hover{background:var(--ink);color:var(--paper)}
+.menu-btn i{display:grid;gap:5px;width:28px;place-content:center}
+.menu-btn i::before,.menu-btn i::after{content:"";display:block;width:16px;height:1.5px;background:currentColor}
+@media(max-width:899px){.hdr__left{display:none}.hdr__in{grid-template-columns:auto 1fr;height:60px}.hdr__logo img{height:21px}.menu-btn span{display:none}.menu-btn{padding:0 6px}.icon-btn.fav{display:none}.hdr__right{gap:8px}}
+
+/* ---------- Меню ---------- */
+.menu{position:fixed;inset:0;z-index:80;background:var(--blush);display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) var(--gut-r) calc(28px + env(safe-area-inset-bottom,0px)) var(--gut);transform:translateY(-100%);transition:transform .6s cubic-bezier(.7,0,.2,1);overflow-y:auto}
+.menu.open{transform:none}
+.menu__top{display:flex;justify-content:space-between;align-items:center;height:48px}
+.menu__top img{height:24px;width:auto}
+.menu__close{display:flex;align-items:center;gap:10px;font:500 12px/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+.menu__close b{font:300 30px/1 var(--f-body)}
+.menu__grid{flex:1;display:grid;grid-template-columns:1fr;gap:8px;align-content:center;max-width:var(--wrap);width:100%;margin:0 auto;padding-block:32px}
+@media(min-width:900px){.menu__grid{grid-template-columns:1.3fr 1fr 1fr}}
+.menu__main{display:grid;gap:2px}
+.menu__main button{font:500 clamp(42px,7vw,92px)/1.02 var(--f-display);text-align:left;display:flex;align-items:baseline;gap:14px;transition:font-style .2s}
+.menu__main button:hover{font-style:italic}
+.menu__main button small{font:500 12px/1 var(--f-body);letter-spacing:.1em;color:var(--muted)}
+.menu__sub{display:grid;align-content:start;gap:12px;padding-top:12px}
+.menu__sub h4{margin:0 0 6px;color:var(--muted)}
+.menu__sub button{text-align:left;font:400 17px/1.3 var(--f-body)}
+.menu__sub button:hover{text-decoration:underline;text-underline-offset:4px}
+.menu__foot{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;font-size:13px;color:var(--muted);max-width:var(--wrap);width:100%;margin:0 auto}
+
+/* ---------- Первый экран ---------- */
+.hero{padding-top:16px}
+.hero__media{position:relative;height:clamp(460px,76vh,820px);border-radius:6px;overflow:hidden;background:var(--blush)}
+.hero__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kenburns 22s ease-in-out infinite alternate;transform-origin:60% 40%}
+@keyframes kenburns{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1.5%,1%)}}
+.hero__shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,15,8,0) 35%,rgba(26,15,8,.5) 100%),linear-gradient(90deg,rgba(26,15,8,.28),rgba(26,15,8,0) 60%)}
+.hero__txt{position:absolute;left:clamp(18px,4vw,56px);right:clamp(18px,4vw,56px);bottom:clamp(22px,5vw,56px);color:#fff;display:grid;gap:22px;max-width:860px}
+.hero__txt h1{margin:0;font:500 clamp(42px,7.4vw,108px)/.95 var(--f-display);letter-spacing:-.015em;text-wrap:balance}
+.hero__txt h1 em{font-style:italic}
+.hero__row{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+.hero__row p{margin:0;font:italic 500 clamp(19px,2vw,26px)/1.2 var(--f-display)}
+.video-note{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(253,251,250,.86);color:var(--ink);font-size:12px}
+.video-note::before{content:"";width:0;height:0;border-left:8px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.hero__dots{position:absolute;right:clamp(18px,4vw,56px);bottom:clamp(26px,5vw,62px);display:flex;gap:8px}
+.hero__dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}
+.hero__dots span.on{background:#fff}
+@media(max-width:699px){.hero__dots{display:none}}
+
+/* ---------- Бегущая строка ---------- */
+.marquee{overflow:hidden;border-block:1px solid var(--line);margin-top:28px;white-space:nowrap}
+.marquee__track{display:inline-flex;gap:28px;padding:14px 0;animation:mq 38s linear infinite;font:500 12px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.marquee__track span{display:inline-flex;align-items:center;gap:28px}
+.marquee__track svg{width:12px;height:12px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- Секции ---------- */
+section{scroll-margin-top:84px}
+.sec{padding-block:clamp(64px,9vw,128px)}
+.sec__head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px;margin-bottom:clamp(28px,4vw,48px)}
+.sec__head p{margin:0;max-width:420px;color:var(--muted)}
+
+/* Категории */
+.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:899px){.cats{grid-template-columns:repeat(2,1fr)}}
+.cat{position:relative;aspect-ratio:3/4;border-radius:6px;overflow:hidden;background:var(--blush);text-align:left}
+.cat img,.cat .paint{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.cat:hover img,.cat:hover .paint{transform:scale(1.05)}
+.cat__lbl{position:absolute;left:16px;right:16px;bottom:14px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cat__lbl b{font:500 clamp(24px,2.6vw,34px)/1 var(--f-display)}
+.cat__lbl span{font-size:12px;letter-spacing:.08em}
+.cat--photo .cat__lbl{color:#fff}
+.cat--photo::after{content:"";position:absolute;inset:50% 0 0;background:linear-gradient(transparent,rgba(26,15,8,.38))}
+.cat--photo .cat__lbl{z-index:1}
+.cat:not(.cat--photo) .cat__lbl{left:10px;right:10px;bottom:10px;padding:12px 12px 10px;border-radius:4px;background:var(--paper)}
+.cat__soon{position:absolute;top:14px;left:14px;padding:6px 10px;border-radius:999px;background:rgba(253,251,250,.9);font-size:11px;letter-spacing:.04em}
+/* «Роспись» вместо фото, по мотивам изделий */
+.paint--stripes{background:repeating-linear-gradient(90deg,var(--paper) 0 34px,var(--glaze-red) 34px 37px,var(--paper) 37px 72px)}
+.paint--stripes::after{content:"";position:absolute;left:50%;top:42%;width:40%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#f3dc9a,var(--gold) 45%,#8a6a22);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.5S1.5 14.8 1.5 7.9A5.4 5.4 0 0 1 12 5.6a5.4 5.4 0 0 1 10.5 2.3C22.5 14.8 12 21.5 12 21.5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.5S1.5 14.8 1.5 7.9A5.4 5.4 0 0 1 12 5.6a5.4 5.4 0 0 1 10.5 2.3C22.5 14.8 12 21.5 12 21.5z'/%3E%3C/svg%3E") center/contain no-repeat}
+.paint--rays{background:repeating-conic-gradient(from 0deg at 50% 46%,var(--paper) 0 7deg,var(--cobalt) 7deg 8.2deg)}
+.paint--rays::after{content:"";position:absolute;left:50%;top:46%;width:30%;aspect-ratio:3/4;transform:translate(-50%,-50%);border-radius:50%;background:var(--paper);box-shadow:0 0 0 4px var(--gold)}
+
+/* Каталог */
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:38px;padding:0 18px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);font:500 13px/1 var(--f-body);transition:background .2s,box-shadow .2s}
+.chip:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);box-shadow:none}
+.chip sup{font-size:10px;opacity:.6;margin-left:3px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+@media(max-width:1099px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:699px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{position:relative;border-right:1px solid var(--line);border-bottom:1px solid var(--line);text-align:left;display:flex;flex-direction:column}
+.card__img{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--blush)}
+.card__img img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.card__img img+img{position:absolute;inset:0;opacity:0}
+.card:hover .card__img img:first-child{transform:scale(1.06)}
+.card:hover .card__img img+img{opacity:1}
+.card__tag{position:absolute;top:12px;left:12px;padding:5px 10px;border-radius:999px;background:var(--paper);font-size:11px;letter-spacing:.04em}
+.card__tag--pre{background:var(--ink);color:var(--paper)}
+.card__fav{position:absolute;top:8px;right:8px;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;z-index:2}
+.card__fav svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:1.4;transition:fill .2s}
+.card__fav[aria-pressed="true"] svg{fill:var(--glaze-red);stroke:var(--glaze-red)}
+.card__body{display:flex;justify-content:space-between;gap:12px;padding:14px 16px 18px;align-items:baseline}
+.card__name{font:500 21px/1.15 var(--f-display)}
+.card__type{display:block;font:400 12px/1.4 var(--f-body);color:var(--muted);margin-top:2px}
+.card__price{font:500 14px/1 var(--f-body);white-space:nowrap;font-variant-numeric:tabular-nums}
+.card.hide{display:none}
+.note{margin-top:18px;font-size:12px;color:var(--muted)}
+.empty{padding:48px 16px;text-align:center;color:var(--muted);border-right:1px solid var(--line);border-bottom:1px solid var(--line);grid-column:1/-1}
+
+/* О бренде */
+.about{background:var(--blush-2)}
+.about__in{display:grid;grid-template-columns:1fr;gap:clamp(28px,5vw,80px);align-items:center}
+@media(min-width:900px){.about__in{grid-template-columns:1fr 1fr}}
+.about__img{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:4/5}
+.about__img img{width:100%;height:100%;object-fit:cover}
+.about__txt{display:grid;gap:26px;max-width:560px}
+.about__txt p{margin:0;font-size:17px;line-height:1.65}
+.about__txt .about__quote{font:italic 500 clamp(28px,3.4vw,44px)/1.12 var(--f-display);margin:0;text-wrap:balance}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);margin-top:6px}
+.facts div{padding:16px 12px 0 0;display:grid;gap:6px}
+.facts b{font:500 26px/1 var(--f-display)}
+.facts span{font-size:13px;color:var(--muted)}
+@media(max-width:499px){.facts{grid-template-columns:1fr}.facts div{padding:14px 0;border-bottom:1px solid var(--line)}}
+
+/* Покупателям */
+.buy{display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:900px){.buy{grid-template-columns:5fr 7fr;gap:80px}}
+.buy__aside{display:grid;gap:20px;align-content:start}
+@media(min-width:900px){.buy__aside{position:sticky;top:110px}}
+.buy__aside p{margin:0;color:var(--muted);max-width:380px}
+.acc{border-top:1px solid var(--ink)}
+.acc__item{border-bottom:1px solid var(--line)}
+.acc__btn{width:100%;display:grid;grid-template-columns:44px 1fr 28px;align-items:center;gap:8px;padding:22px 0;text-align:left}
+.acc__btn span:first-child{font:500 12px/1 var(--f-body);color:var(--muted);font-variant-numeric:tabular-nums}
+.acc__btn b{font:500 clamp(24px,2.6vw,32px)/1.1 var(--f-display)}
+.acc__btn i{position:relative;width:16px;height:16px;justify-self:end}
+.acc__btn i::before,.acc__btn i::after{content:"";position:absolute;left:0;top:7.5px;width:16px;height:1.4px;background:currentColor;transition:transform .3s}
+.acc__btn i::after{transform:rotate(90deg)}
+.acc__btn[aria-expanded="true"] i::after{transform:rotate(0)}
+.acc__panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.acc__panel>div{overflow:hidden}
+.acc__btn[aria-expanded="true"]+.acc__panel{grid-template-rows:1fr}
+.acc__body{padding:0 0 28px 52px;display:grid;gap:12px;max-width:680px}
+.acc__body p,.acc__body ul{margin:0}
+.acc__body ul{padding-left:18px;display:grid;gap:8px}
+.acc__body li::marker{color:var(--gold)}
+.hl{display:flex;flex-wrap:wrap;gap:8px}
+.hl span{padding:7px 12px;border-radius:999px;background:var(--blush-2);font-size:13px}
+@media(max-width:599px){.acc__btn{grid-template-columns:32px 1fr 24px}.acc__body{padding-left:40px}}
+
+/* Контакты */
+.contacts{background:var(--blush)}
+.contacts__in{display:grid;gap:40px}
+@media(min-width:900px){.contacts__in{grid-template-columns:1fr 1fr;align-items:end}}
+.clist{display:grid;border-top:1px solid var(--ink)}
+.crow{display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(26,15,8,.18)}
+.crow span{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.crow b{font:500 clamp(20px,2.2vw,28px)/1.15 var(--f-display);user-select:all;min-width:0;overflow-wrap:anywhere}
+.copy{height:32px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--ink);font-size:12px}
+.copy:hover{background:var(--ink);color:var(--paper)}
+@media(max-width:499px){.crow{grid-template-columns:1fr auto}.crow span{grid-column:1/-1}}
+
+/* Подвал */
+.foot{background:var(--ink);color:#d9cfc9;padding-block:56px 28px}
+.foot__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+@media(max-width:899px){.foot__grid{grid-template-columns:repeat(2,1fr)}}
+.foot h4{margin:0 0 14px;color:#fff}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14px}
+.foot ul button,.foot ul a{text-decoration:none;text-align:left}
+.foot ul button:hover,.foot ul a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.foot__logo{margin-top:56px;width:100%;height:auto;opacity:.95}
+.foot__bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:24px;font-size:12px;color:#9c8f88}
+
+/* Окно товара */
+.modal{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:16px;background:rgba(26,15,8,.45);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal.open{opacity:1;visibility:visible}
+.modal__box{position:relative;width:min(980px,100%);max-height:calc(100% - 16px);overflow:auto;background:var(--paper);border-radius:8px;display:grid;grid-template-columns:1fr;transform:translateY(16px);transition:transform .3s}
+.modal.open .modal__box{transform:none}
+@media(min-width:760px){.modal__box{grid-template-columns:1fr 1fr}}
+.modal__img{background:var(--blush);aspect-ratio:4/5}
+.modal__img img{width:100%;height:100%;object-fit:cover}
+.modal__info{padding:clamp(22px,3vw,40px);display:grid;gap:18px;align-content:start}
+.modal__info h3{margin:0;font:500 clamp(32px,3.4vw,44px)/1 var(--f-display)}
+.modal__price{font:500 18px/1 var(--f-body)}
+.modal__info p{margin:0;color:var(--muted)}
+.sizes{display:flex;flex-wrap:wrap;gap:8px}
+.sizes button{min-width:52px;height:40px;padding:0 10px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line);font-size:14px;font-variant-numeric:tabular-nums}
+.sizes button[aria-pressed="true"]{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.modal__x{position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:50%;background:var(--paper);font-size:24px;line-height:1;z-index:2}
+.modal__mini{display:grid;gap:8px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+
+/* Тост */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);z-index:95;background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;display:flex;gap:10px;align-items:center;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:14px;height:14px;flex:none}
+
+/* Мерцающие звёздочки в деталях */
+.twinkle{animation:tw 2.8s ease-in-out infinite}
+.twinkle:nth-child(2n){animation-delay:.9s}
+@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.25;transform:scale(.6)}}
+.h2 .star{width:.42em;height:.42em;vertical-align:.5em;margin-left:.08em;color:var(--gold)}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="s" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0z"/></symbol>
+</svg>
+
+<!-- Прелоадер -->
+<div class="loader" id="loader" aria-hidden="true">
+  <canvas id="stars"></canvas>
+  <img class="loader__logo" src="img/logo.svg" alt="">
+  <div class="loader__note eyebrow">фарфор · ручная работа</div>
+</div>
+
+<div class="top">Доставка СДЭК по России, Беларуси и Казахстану · отправка на следующий день</div>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <nav class="hdr__left" aria-label="Быстрые ссылки">
+      <button data-go="catalog">Каталог</button>
+      <button data-go="about">О бренде</button>
+      <button data-go="buyers">Покупателям</button>
+    </nav>
+    <button class="hdr__logo" data-go="top" aria-label="mulifeyn — на главную"><img src="img/logo.svg" alt="mulifeyn" width="134" height="26"></button>
+    <div class="hdr__right">
+      <button class="icon-btn fav" aria-label="Избранное"><svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg><span class="badge" id="favN" data-n="0">0</span></button>
+      <button class="icon-btn" aria-label="Корзина"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="badge" id="cartN" data-n="0">0</span></button>
+      <button class="menu-btn" id="menuOpen" aria-expanded="false" aria-controls="menu"><span>Меню</span><i></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Меню -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Меню" hidden>
+  <div class="menu__top">
+    <img src="img/logo.svg" alt="mulifeyn">
+    <button class="menu__close" id="menuClose">Закрыть <b aria-hidden="true">×</b></button>
+  </div>
+  <div class="menu__grid">
+    <div class="menu__main">
+      <button data-go="catalog">Каталог <small>13</small></button>
+      <button data-go="buyers">Покупателям</button>
+      <button data-go="about">О бренде</button>
+      <button data-go="contacts">Контакты</button>
+    </div>
+    <div class="menu__sub">
+      <h4 class="eyebrow">Каталог</h4>
+      <button data-go="catalog" data-filter="ring">Кольца</button>
+      <button data-go="catalog" data-filter="bracelet">Браслеты</button>
+      <button data-go="catalog" data-filter="necklace">Ожерелья</button>
+      <button data-go="catalog" data-filter="earrings">Серьги</button>
+    </div>
+    <div class="menu__sub">
+      <h4 class="eyebrow">Покупателям</h4>
+      <button data-go="buyers" data-acc="0">Доставка</button>
+      <button data-go="buyers" data-acc="1">Возврат</button>
+      <button data-go="buyers" data-acc="2">Уход за изделиями</button>
+      <button data-go="buyers" data-acc="3">Гарантии</button>
+      <button data-go="buyers" data-acc="4">Предзаказ</button>
+    </div>
+  </div>
+  <div class="menu__foot">
+    <span>Telegram @mulifeynn</span>
+    <span>+7 938 520-01-01</span>
+    <span>lara.shuaipova.95@mail.ru</span>
+  </div>
+</div>
+
+<main id="top">
+  <!-- Первый экран -->
+  <section class="hero wrap" aria-label="Главный экран">
+    <div class="hero__media">
+      <img src="img/hero-rings.jpg" alt="Фарфоровые кольца mulifeyn с росписью и золотыми сердцами">
+      <div class="hero__shade"></div>
+      <span class="video-note">Здесь будет видео с изделиями</span>
+      <div class="hero__txt">
+        <h1>Фарфор, который <em>поднимает настроение</em></h1>
+        <div class="hero__row">
+          <button class="btn btn--light" data-go="catalog">Смотреть каталог</button>
+          <p>Украшения ручной работы с росписью и золотом</p>
+        </div>
+      </div>
+      <div class="hero__dots" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="mq"></div>
+  </div>
+
+  <!-- Категории -->
+  <section class="sec wrap" id="cats" aria-labelledby="catsT">
+    <div class="sec__head">
+      <h2 class="h2" id="catsT">Выберите <em>своё</em><svg class="star twinkle"><use href="#s"/></svg></h2>
+      <p>Кольца, браслеты, ожерелья и серьги. Каждое изделие лепится и расписывается вручную, поэтому двух одинаковых не бывает.</p>
+    </div>
+    <div class="cats">
+      <button class="cat cat--photo" data-go="catalog" data-filter="ring"><img src="img/ring-gold-heart.jpg" alt=""><div class="cat__lbl"><b>Кольца</b><span>9 изделий</span></div></button>
+      <button class="cat" data-go="catalog" data-filter="bracelet"><div class="paint paint--stripes"></div><span class="cat__soon">Фото после съёмки</span><div class="cat__lbl"><b>Браслеты</b><span>скоро</span></div></button>
+      <button class="cat cat--photo" data-go="catalog" data-filter="necklace"><img src="img/necklace-heart.jpg" alt=""><div class="cat__lbl"><b>Ожерелья</b><span>3 изделия</span></div></button>
+      <button class="cat" data-go="catalog" data-filter="earrings"><div class="paint paint--rays"></div><span class="cat__soon">Фото после съёмки</span><div class="cat__lbl"><b>Серьги</b><span>скоро</span></div></button>
+    </div>
+  </section>
+
+  <!-- Каталог -->
+  <section class="sec wrap" id="catalog" aria-labelledby="catT" style="padding-top:0">
+    <div class="sec__head">
+      <h2 class="h2" id="catT">Каталог</h2>
+      <div class="filters" role="group" aria-label="Фильтр по категориям" id="filters"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="note">Названия и цены в макете примерные, заменим на ваши, когда будет готов каталог.</p>
+  </section>
+
+  <!-- О бренде -->
+  <section class="sec about" id="about" aria-labelledby="aboutT">
+    <div class="wrap about__in">
+      <div class="about__img"><img src="img/necklaces.jpg" alt="Ожерелья mulifeyn из коралловых и голубых бусин с фарфоровыми подвесками" loading="lazy"></div>
+      <div class="about__txt">
+        <span class="eyebrow">О бренде</span>
+        <h2 class="h2" id="aboutT">mulifeyn: фарфор, сделанный руками</h2>
+        <p>Все изделия изготавливаются из фарфора кропотливо вручную и проходят много этапов создания, прежде чем обретут свою конечную форму.</p>
+        <p class="about__quote">Украшения mulifeyn созданы, чтобы просто дарить вам хорошее настроение и новый опыт.</p>
+        <div class="facts">
+          <div><b>Фарфор</b><span>основа каждого изделия</span></div>
+          <div><b>Вручную</b><span>лепка и роспись</span></div>
+          <div><b>Золото</b><span>и платина в деталях</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Покупателям -->
+  <section class="sec wrap" id="buyers" aria-labelledby="buyT">
+    <div class="buy">
+      <div class="buy__aside">
+        <span class="eyebrow">Покупателям</span>
+        <h2 class="h2" id="buyT">Доставка, уход <em>и гарантии</em></h2>
+        <p>Если не нашли ответ, напишите в Telegram <b>@mulifeynn</b>, ответим лично.</p>
+      </div>
+      <div class="acc" id="acc">
+        <div class="acc__item">
+          <button class="acc__btn" aria-expanded="true" id="a0"><span>01</span><b>Доставка</b><i></i></button>
+          <div class="acc__panel"><div><div class="acc__body">
+            <p>Доставляем транспортной компанией СДЭК по России, Беларуси и Казахстану (при возможности оплаты на карту РФ).</p>
+            <div class="hl"><span>3–9 дней</span><span>Москва: 3 дня</span><span>Санкт-Петербург: 4 дня</span><span>Отправка на следующий день или через день</span></div>
+            <p>Доставку в другие страны уточняйте в Telegram @mulifeynn или по контактам ниже.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" aria-expanded="false" id="a1"><span>02</span><b>Возврат</b><i></i></button>
+          <div class="acc__panel"><div><div class="acc__body">
+            <p>Если что-то не понравилось или не подошло, всегда можно оформить возврат.</p>
+            <p>Посылку можно вернуть в той же коробке по адресу отправителя, указанному в СДЭК. Доставку при возврате оплачивает покупатель (есть исключения).</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" aria-expanded="false" id="a2"><span>03</span><b>Уход за изделиями</b><i></i></button>
+          <div class="acc__panel"><div><div class="acc__body">
+            <ul>
+              <li>Снимайте украшения перед мытьём рук, душем, плаванием, нанесением духов и крема.</li>
+              <li>Берегите золотые и платиновые элементы от абразивных поверхностей. Такие украшения лучше хранить на ткани.</li>
+              <li>Протирайте от загрязнений мягкой тканевой салфеткой.</li>
+            </ul>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" aria-expanded="false" id="a3"><span>04</span><b>Гарантии</b><i></i></button>
+          <div class="acc__panel"><div><div class="acc__body">
+            <p>Если колечко разобьётся в течение месяца, на новое действует скидка 50%.</p>
+            <p>Также доступно повторное покрытие золотом или платиной.</p>
+          </div></div></div>
+        </div>
+        <div class="acc__item">
+          <button class="acc__btn" aria-expanded="false" id="a4"><span>05</span><b>Предзаказ</b><i></i></button>
+          <div class="acc__panel"><div><div class="acc__body">
+            <p>Можно оформить предзаказ на изделия, которых нет в наличии. Изготовление занимает около месяца, изредка больше (в случае керамического форс-мажора).</p>
+            <p>Иногда колечко может получиться с браком или погрешностью в размере. Если больше, это не страшно, а если меньше, может быть неудобно носить. Такие нюансы обсудим лично.</p>
+            <p>Если колечко вышло меньше, вы вправе выбрать: сделать новое или не выкупать изделие.</p>
+          </div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section class="sec contacts" id="contacts" aria-labelledby="conT">
+    <div class="wrap contacts__in">
+      <div style="display:grid;gap:18px">
+        <span class="eyebrow">Контакты</span>
+        <h2 class="h2" id="conT">Напишите нам, <em>поможем с размером</em> и подарком</h2>
+      </div>
+      <div class="clist">
+        <div class="crow"><span>Telegram</span><b>@mulifeynn</b><button class="copy" data-copy="@mulifeynn">Копировать</button></div>
+        <div class="crow"><span>Telegram / WhatsApp</span><b>+7 938 520-01-01</b><button class="copy" data-copy="+79385200101">Копировать</button></div>
+        <div class="crow"><span>Почта</span><b>lara.shuaipova.95@mail.ru</b><button class="copy" data-copy="lara.shuaipova.95@mail.ru">Копировать</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div><h4 class="eyebrow">Каталог</h4><ul>
+        <li><button data-go="catalog" data-filter="ring">Кольца</button></li>
+        <li><button data-go="catalog" data-filter="bracelet">Браслеты</button></li>
+        <li><button data-go="catalog" data-filter="necklace">Ожерелья</button></li>
+        <li><button data-go="catalog" data-filter="earrings">Серьги</button></li></ul></div>
+      <div><h4 class="eyebrow">Покупателям</h4><ul>
+        <li><button data-go="buyers" data-acc="0">Доставка</button></li>
+        <li><button data-go="buyers" data-acc="1">Возврат</button></li>
+        <li><button data-go="buyers" data-acc="2">Уход</button></li>
+        <li><button data-go="buyers" data-acc="3">Гарантии</button></li>
+        <li><button data-go="buyers" data-acc="4">Предзаказ</button></li></ul></div>
+      <div><h4 class="eyebrow">Контакты</h4><ul>
+        <li>Telegram @mulifeynn</li>
+        <li>+7 938 520-01-01</li>
+        <li>lara.shuaipova.95@mail.ru</li></ul></div>
+      <div><h4 class="eyebrow">Соцсети</h4><ul>
+        <li><a href="https://t.me/mulifeynn" target="_blank" rel="noopener">Telegram</a></li>
+        <li><span>ВКонтакте</span></li>
+        <li><span>Pinterest</span></li>
+        <li><span>Instagram*</span></li></ul></div>
+    </div>
+    <img class="foot__logo" src="img/logo-white.svg" alt="mulifeyn" loading="lazy">
+    <div class="foot__bottom">
+      <span>© mulifeyn, 2026</span>
+      <span>*Instagram принадлежит компании Meta, признанной экстремистской и запрещённой в РФ</span>
+      <span>Политика конфиденциальности</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Окно товара -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName">
+  <div class="modal__box">
+    <button class="modal__x" id="mClose" aria-label="Закрыть">×</button>
+    <div class="modal__img"><img id="mImg" src="img/ring-red-heart.jpg" alt=""></div>
+    <div class="modal__info">
+      <span class="eyebrow" id="mType">Кольцо</span>
+      <h3 id="mName">Название</h3>
+      <div class="modal__price" id="mPrice"></div>
+      <p id="mDesc"></p>
+      <div id="mSizesWrap" style="display:grid;gap:10px">
+        <span class="eyebrow">Размер</span>
+        <div class="sizes" id="mSizes"></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button class="btn" id="mAdd">В корзину</button>
+        <button class="btn btn--line" id="mPre">Предзаказ</button>
+      </div>
+      <div class="modal__mini">
+        <span>Доставка СДЭК 3–9 дней, отправка на следующий день</span>
+        <span>Скидка 50% на новое кольцо, если разобьётся в течение месяца</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24" style="color:var(--gold)"><use href="#s"/></svg><span id="toastT"></span></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Прелоадер: мерцающие звёздочки ---------- */
+const loader=$('#loader'), cv=$('#stars'), ctx=cv.getContext('2d');
+const colors=['#c9a14a','#c9a14a','#25348c','#d4402f','#e2c37a'];
+let W,H,dpr,stars=[],raf,t0=performance.now();
+function resize(){dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const n=Math.round(Math.min(70,W*H/14000));stars=[];
+  for(let i=0;i<n;i++){let x,y;do{x=Math.random()*W;y=Math.random()*H}while(Math.abs(x-W/2)<Math.min(200,W*.3)&&Math.abs(y-H/2)<60);
+    stars.push({x,y,r:4+Math.random()*Math.random()*14,c:colors[i%colors.length],p:Math.random()*6.28,s:1.2+Math.random()*2.4,d:Math.random()*900})}}
+function star(x,y,r){ctx.beginPath();ctx.moveTo(x,y-r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.quadraticCurveTo(x,y,x,y+r);ctx.quadraticCurveTo(x,y,x-r,y);ctx.quadraticCurveTo(x,y,x,y-r);ctx.fill()}
+function frame(now){const t=(now-t0);ctx.clearRect(0,0,W,H);
+  for(const s of stars){const appear=Math.min(1,Math.max(0,(t-s.d)/500));const k=(Math.sin(t/1000*s.s+s.p)+1)/2;
+    ctx.globalAlpha=appear*(.15+.85*k);ctx.fillStyle=s.c;star(s.x,s.y,s.r*(.45+.55*k)*appear)}
+  ctx.globalAlpha=1;raf=requestAnimationFrame(frame)}
+resize();addEventListener('resize',resize);
+if(reduce){stars.forEach(s=>s.d=0);frame(t0);cancelAnimationFrame(raf)}else raf=requestAnimationFrame(frame);
+let hidden=false;
+function hideLoader(){if(hidden)return;hidden=true;loader.classList.add('done');setTimeout(()=>{cancelAnimationFrame(raf);loader.remove()},800)}
+const minShow=reduce?300:2400;
+const ready=()=>setTimeout(hideLoader,Math.max(0,minShow-(performance.now()-t0)));
+document.readyState==='complete'?ready():addEventListener('load',ready);
+setTimeout(hideLoader,5000);
+loader.addEventListener('click',hideLoader);
+
+/* ---------- Бегущая строка ---------- */
+const words=['Ручная работа','Фарфор','Роспись','Золото и платина','Доставка СДЭК','Предзаказ'];
+const star12='<svg viewBox="0 0 24 24" style="color:var(--gold)"><use href="#s"/></svg>';
+const chunk=words.map(w=>`<span>${w}${star12}</span>`).join('');
+$('#mq').innerHTML=chunk+chunk+chunk+chunk;
+
+/* ---------- Товары (примерные) ---------- */
+const TYPES={ring:'Кольцо',bracelet:'Браслет',necklace:'Ожерелье',earrings:'Серьги'};
+const P=[
+ {id:1,t:'ring',n:'Горячее сердце',p:3900,img:'ring-red-heart',img2:'ring-amore-heart',tag:'Новинка',d:'Белое кольцо с объёмным красным сердцем и золотыми лучами.'},
+ {id:2,t:'ring',n:'Ласточка',p:4600,img:'ring-bird',img2:'ring-blue-heart',d:'Печатка с кобальтовой ласточкой в золотой рамке и лучами.'},
+ {id:3,t:'ring',n:'Синее сердце',p:4200,img:'ring-blue-heart',img2:'ring-bird',d:'Кобальтовые полосы и сердце в золотом контуре.'},
+ {id:4,t:'ring',n:'Золотое сердце',p:4400,img:'ring-gold-heart',img2:'ring-red-heart',tag:'Хит',d:'Красные полосы и объёмное сердце, покрытое золотом.'},
+ {id:5,t:'ring',n:'Amore',p:4200,img:'ring-amore-heart',img2:'ring-gold-heart',d:'Красное сердце в золотом контуре на белом фарфоре.'},
+ {id:6,t:'ring',n:'Арлекин',p:3700,img:'ring-harlequin',img2:'ring-star',pre:true,d:'Красные ромбы с золотыми точками.'},
+ {id:7,t:'ring',n:'OK',p:3500,img:'ring-ok',img2:'ring-q',d:'Сердце с надписью и прозрачной бусиной.'},
+ {id:8,t:'ring',n:'Королева',p:3500,img:'ring-q',img2:'ring-ok',pre:true,d:'Буква Q и красные сердечки.'},
+ {id:9,t:'ring',n:'Звёздная ночь',p:3800,img:'ring-star',img2:'ring-harlequin',d:'Глубокий кобальт и белые звёзды.'},
+ {id:10,t:'necklace',n:'Тюльпан',p:5200,img:'necklace-coral',img2:'necklace-heart',tag:'Новинка',d:'Коралловые бусины и белый фарфоровый тюльпан.'},
+ {id:11,t:'necklace',n:'Сердца',p:5600,img:'necklace-heart',img2:'necklace-blue',d:'Голубые бусины, фарфоровая бусина с сердцами и золотой замок-тоггл.'},
+ {id:12,t:'necklace',n:'Небо',p:4900,img:'necklace-blue',img2:'necklace-heart',pre:true,d:'Нежно-голубые бусины и золотая фурнитура.'},
+];
+const rub=n=>n.toLocaleString('ru-RU')+' ₽';
+const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg>';
+const grid=$('#grid');
+grid.innerHTML=P.map(p=>`<div class="card" data-t="${p.t}">
+  <button class="card__fav" aria-pressed="false" aria-label="В избранное: ${p.n}" data-fav="${p.id}">${heart}</button>
+  <button style="text-align:left;display:flex;flex-direction:column;flex:1" data-open="${p.id}">
+   <div class="card__img"><img src="img/${p.img}.jpg" alt="${TYPES[p.t]} «${p.n}»" loading="lazy"><img src="img/${p.img2}.jpg" alt="" loading="lazy">
+    ${p.pre?'<span class="card__tag card__tag--pre">Предзаказ</span>':p.tag?`<span class="card__tag">${p.tag}</span>`:''}</div>
+   <div class="card__body"><div><div class="card__name">${p.n}</div><span class="card__type">${TYPES[p.t]}</span></div><span class="card__price">${rub(p.p)}</span></div>
+  </button></div>`).join('')+`<div class="empty" id="empty" hidden>Скоро здесь появятся изделия. Можно оформить предзаказ в Telegram @mulifeynn.</div>`;
+
+const F=[['all','Все'],['ring','Кольца'],['bracelet','Браслеты'],['necklace','Ожерелья'],['earrings','Серьги']];
+const cnt=t=>t==='all'?P.length:P.filter(p=>p.t===t).length;
+$('#filters').innerHTML=F.map(([k,l])=>`<button class="chip" data-f="${k}" aria-pressed="${k==='all'}">${l}<sup>${cnt(k)}</sup></button>`).join('');
+function setFilter(f){$$('.chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.f===f));
+  let n=0;$$('.card').forEach(c=>{const on=f==='all'||c.dataset.t===f;c.classList.toggle('hide',!on);n+=on});$('#empty').hidden=n>0}
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)setFilter(b.dataset.f)});
+
+/* ---------- Избранное / корзина ---------- */
+let favs=new Set(),cart=0;
+function badge(el,n){el.textContent=n;el.dataset.n=n}
+const toastEl=$('#toast');let tt;
+function toast(msg){$('#toastT').textContent=msg;toastEl.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>toastEl.classList.remove('show'),2200)}
+grid.addEventListener('click',e=>{
+  const f=e.target.closest('[data-fav]');
+  if(f){const id=f.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);f.setAttribute('aria-pressed',favs.has(id));badge($('#favN'),favs.size);toast(favs.has(id)?'Добавлено в избранное':'Убрано из избранного');return}
+  const o=e.target.closest('[data-open]');if(o)openModal(+o.dataset.open)});
+
+/* ---------- Окно товара ---------- */
+const modal=$('#modal');let cur,lastFocus;
+function openModal(id){cur=P.find(p=>p.id===id);lastFocus=document.activeElement;
+  $('#mImg').src=`img/${cur.img}.jpg`;$('#mImg').alt=`${TYPES[cur.t]} «${cur.n}»`;
+  $('#mType').textContent=TYPES[cur.t]+(cur.pre?' · под заказ':' · в наличии');$('#mName').textContent=cur.n;$('#mPrice').textContent=rub(cur.p);$('#mDesc').textContent=cur.d+' Фарфор, ручная роспись.';
+  const isRing=cur.t==='ring';$('#mSizesWrap').hidden=!isRing;
+  $('#mSizes').innerHTML=['15','16','16,5','17','17,5','18','19'].map((s,i)=>`<button aria-pressed="${i===3}">${s}</button>`).join('');
+  $('#mAdd').hidden=!!cur.pre;
+  modal.classList.add('open');document.body.classList.add('lock');setTimeout(()=>$('#mClose').focus(),50)}
+function closeModal(){modal.classList.remove('open');document.body.classList.remove('lock');lastFocus&&lastFocus.focus()}
+$('#mSizes').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#mSizes button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
+$('#mClose').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+$('#mAdd').onclick=()=>{cart++;badge($('#cartN'),cart);closeModal();toast(`«${cur.n}» в корзине`)};
+$('#mPre').onclick=()=>{closeModal();toast('Заявка на предзаказ: напишем вам в Telegram')};
+
+/* ---------- Меню ---------- */
+const menu=$('#menu');
+function openMenu(){menu.hidden=false;requestAnimationFrame(()=>menu.classList.add('open'));$('#menuOpen').setAttribute('aria-expanded','true');document.body.classList.add('lock');setTimeout(()=>$('#menuClose').focus(),300)}
+function closeMenu(){menu.classList.remove('open');$('#menuOpen').setAttribute('aria-expanded','false');document.body.classList.remove('lock');setTimeout(()=>{if(!menu.classList.contains('open'))menu.hidden=true},600)}
+$('#menuOpen').onclick=openMenu;$('#menuClose').onclick=closeMenu;
+addEventListener('keydown',e=>{if(e.key==='Escape'){if(modal.classList.contains('open'))closeModal();else if(menu.classList.contains('open'))closeMenu()}});
+
+/* ---------- Аккордеон ---------- */
+const accBtns=$$('.acc__btn');
+function openAcc(i,only){accBtns.forEach((b,j)=>{if(j===i)b.setAttribute('aria-expanded',only?'true':String(b.getAttribute('aria-expanded')!=='true'));else if(only)b.setAttribute('aria-expanded','false')})}
+accBtns.forEach((b,i)=>b.onclick=()=>openAcc(i,false));
+
+/* ---------- Навигация ---------- */
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(!g)return;
+  const wasOpen=menu.classList.contains('open');if(wasOpen)closeMenu();
+  if(g.dataset.filter)setFilter(g.dataset.filter);
+  if(g.dataset.acc!=null)openAcc(+g.dataset.acc,true);
+  const target=g.dataset.go==='top'?document.body:document.getElementById(g.dataset.go);
+  setTimeout(()=>target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}),wasOpen?350:0)});
+
+/* ---------- Копирование ---------- */
+$$('[data-copy]').forEach(b=>b.onclick=()=>{const v=b.dataset.copy;
+  const done=()=>toast('Скопировано: '+v);
+  try{navigator.clipboard.writeText(v).then(done,()=>{selectText(b);toast('Выделено, нажмите Ctrl+C')})}catch(_){selectText(b);toast('Выделено, нажмите Ctrl+C')}});
+function selectText(b){const el=b.previousElementSibling;const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+})();
+</script>
