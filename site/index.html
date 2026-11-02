@@ -3,7 +3,7 @@
 <meta name="description" content="mulifeyn — фарфоровые украшения ручной работы">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,300;1,400&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,300;1,400&family=Great+Vibes&family=Onest:wght@400;500;600&display=swap">
 <style>
 /* Layout: белая витрина в духе ателье. Фото на всю ширину, тонкий курсив для акцентов,
    сетка карточек на тонких линиях, тёмный подвал и боковое меню. Звёздочки цвета глазури — только в прелоадере. */
@@ -18,6 +18,7 @@
   --cobalt:#25348c;
   --glaze-red:#d4402f;
   --f-italic:"Cormorant","Times New Roman",serif;
+  --f-script:"Great Vibes","Cormorant",cursive;
   --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   --gut:max(16px,env(safe-area-inset-left,0px));
   --gut-r:max(16px,env(safe-area-inset-right,0px));
@@ -36,6 +37,8 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
 .pad{padding-left:var(--gut);padding-right:var(--gut-r)}
 .it{font-family:var(--f-italic);font-style:italic;font-weight:300;letter-spacing:-.005em}
+/* каллиграфия для заголовков, как у Souris */
+h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-script);font-style:normal;font-weight:400;letter-spacing:0}
 .link{display:inline-block;font:500 15px/1 var(--f-body);padding-bottom:6px;border-bottom:1.5px solid currentColor;transition:opacity .2s}
 .link:hover{opacity:.65}
 .btn{height:48px;padding:0 26px;background:var(--ink);color:#fff;font:500 15px/1 var(--f-body);transition:background .2s}
@@ -105,16 +108,16 @@ a{color:inherit}
 .meta-note{font-size:12px;color:#8f8782;line-height:1.5;margin:0}
 
 /* ---------- Первый экран ---------- */
-.hero{position:relative;height:clamp(480px,66vh,680px);overflow:hidden;background:var(--blush);color:#fff}
+.hero{position:relative;height:100vh;height:100svh;min-height:520px;overflow:hidden;background:var(--blush);color:#fff}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 24s ease-in-out infinite alternate}
 @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1) translate(-1%,1%)}}
 .hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-@media(max-width:699px){.hero__video{display:block}.hero{height:clamp(520px,78vh,720px)}}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 25%,rgba(0,0,0,0) 40%,rgba(0,0,0,.45))}
-.hero__title{margin:0 0 4px;font-size:clamp(44px,6.6vw,100px);line-height:.95;text-wrap:balance}
-.hero__foot{position:absolute;z-index:1;left:0;right:0;bottom:clamp(32px,6vh,60px);display:grid;justify-items:center;gap:18px;text-align:center;padding-inline:16px}
+@media(max-width:699px){.hero__video{display:block}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 50%,rgba(0,0,0,.45)),linear-gradient(90deg,rgba(0,0,0,.18),rgba(0,0,0,0) 55%)}
+.hero__title{margin:0;font-size:clamp(46px,6.4vw,104px);line-height:1.05;text-wrap:balance}
+.hero__foot{position:absolute;z-index:1;left:var(--gut);right:var(--gut-r);bottom:calc(clamp(32px,7vh,72px) + env(safe-area-inset-bottom,0px));display:grid;justify-items:start;gap:18px;text-align:left;max-width:720px}
 .hero__foot p{margin:0;max-width:440px;font-size:16px}
-.video-note{position:absolute;z-index:1;right:var(--gut-r);bottom:24px;font-size:12px;opacity:.85;display:flex;gap:8px;align-items:center}
+.video-note{position:absolute;z-index:1;right:var(--gut-r);bottom:calc(clamp(32px,7vh,72px) + 4px);font-size:12px;opacity:.85;display:flex;gap:8px;align-items:center}
 .video-note::before{content:"";border-left:7px solid #fff;border-top:4.5px solid transparent;border-bottom:4.5px solid transparent}
 @media(max-width:699px){.video-note{display:none}}
 
@@ -152,19 +155,19 @@ section{scroll-margin-top:76px}
 .more{display:flex;justify-content:center;padding-block:36px 0}
 
 /* ---------- Новая коллекция ---------- */
-.coll{position:relative;height:clamp(440px,62vh,640px);overflow:hidden;color:#fff;margin-top:clamp(64px,8vw,110px)}
+.coll{position:relative;height:clamp(560px,88vh,920px);overflow:hidden;color:#fff;margin-top:clamp(64px,8vw,110px)}
 .coll img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.coll::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),transparent 35%,rgba(0,0,0,.45))}
-.coll h2{margin:0 0 4px;font-size:clamp(44px,5.6vw,88px);line-height:1}
+.coll::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),transparent 30%,transparent 60%,rgba(0,0,0,.4))}
+.coll h2{position:absolute;z-index:1;top:clamp(84px,11vh,110px);left:0;right:0;text-align:center;margin:0;font-size:clamp(46px,5.6vw,88px);line-height:1.1;padding-inline:16px}
 .coll__foot{position:absolute;z-index:1;left:0;right:0;bottom:clamp(28px,6vh,56px);display:grid;justify-items:center;gap:18px;text-align:center;padding-inline:16px}
 .coll__foot p{margin:0;max-width:480px;font-size:16px}
 
 /* ---------- О бренде ---------- */
 .about{display:grid;grid-template-columns:1fr;align-items:stretch}
-@media(min-width:900px){.about{grid-template-columns:1fr 1fr}}
+
 .about__img{position:relative;min-height:420px;background:var(--blush)}
 .about__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.about__txt{display:grid;align-content:center;justify-items:center;text-align:center;gap:26px;padding-block:clamp(56px,8vw,120px)}
+.about__txt{display:grid;border-top:1px solid var(--line);align-content:center;justify-items:center;text-align:center;gap:26px;padding-block:clamp(56px,8vw,120px)}
 .about__txt>*{max-width:520px}
 .about__txt h2{margin:0;font-size:clamp(42px,5vw,72px);line-height:1}
 .about__txt p{margin:0;font-size:16px;line-height:1.7}
@@ -397,8 +400,8 @@ section{scroll-margin-top:76px}
   <!-- Новая коллекция -->
   <section class="coll" data-hdr="light" aria-labelledby="collT">
     <img src="img/collection-necklaces.jpg" alt="Ожерелья mulifeyn: коралловые бусины с фарфоровым тюльпаном и голубые бусины с бусиной-сердцем" loading="lazy">
+    <h2 class="it" id="collT">Новая коллекция</h2>
     <div class="coll__foot">
-      <h2 class="it" id="collT">Новая коллекция</h2>
       <p>Ожерелья из коралловых и голубых бусин с фарфоровыми подвесками ручной работы</p>
       <button class="link" data-go="catalog" data-filter="necklace">Перейти к коллекции</button>
     </div>
@@ -406,7 +409,6 @@ section{scroll-margin-top:76px}
 
   <!-- О бренде -->
   <section class="about" id="about" aria-labelledby="aboutT">
-    <div class="about__img" data-hdr="light-m"><img src="img/necklaces.jpg" alt="Фарфоровая бусина с красными сердцами и золотой замок" loading="lazy"></div>
     <div class="about__txt pad">
       <h2 class="it" id="aboutT">О бренде</h2>
       <p>Все изделия изготавливаются из фарфора кропотливо вручную и проходят много этапов создания, прежде чем обретут свою конечную форму.</p>
