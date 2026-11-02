@@ -298,6 +298,25 @@ section{scroll-margin-top:76px}
 .toast{position:fixed;left:50%;top:calc(90px + env(safe-area-inset-top,0px));transform:translate(-50%,-10px);z-index:95;background:var(--ink);color:#fff;padding:12px 22px;font-size:14px;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;max-width:calc(100% - 32px)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* ---------- Единая аккуратная типографика ---------- */
+:root{--h:clamp(30px,2.9vw,44px);--t:15px;--t-s:13px}
+body{font-size:var(--t)}
+.hero__title,.coll h2,.shead h2,.about__txt h2,.split__form h2{font-size:var(--h)!important;line-height:1.2!important}
+.hero__foot{gap:16px}
+.hero__foot p,.coll__foot p,.about__txt p,.acc__body,.foot ul,.split__form p,.shead p{font-size:var(--t)}
+.about__txt .about__quote{font-size:clamp(20px,1.7vw,24px)!important;line-height:1.35!important}
+.link{font-size:14px;padding-bottom:5px;border-bottom-width:1px}
+.filters{font-size:14px}
+.card__name,.card__price{font-size:14px}
+.acc__btn{font-size:16px;padding:20px 0}
+.btn{height:44px;font-size:14px}
+.modal__info h3{font-size:clamp(28px,2.6vw,36px)}
+.drawer__head h3{font-size:30px}
+.nav{font-size:16px}.nav .sub button{font-size:15px}
+.side__cap{font-size:clamp(28px,2.6vw,40px)}
+.foot ul{gap:12px}
+.cookie{font-size:14px}
+.shead{gap:10px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style>
 
