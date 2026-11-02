@@ -372,6 +372,18 @@ body{font-size:var(--t)}
 .card,.card__open,.card__body>*{min-width:0}
 .card__name{overflow-wrap:anywhere}
 @media(max-width:699px){.card__body{flex-direction:column;align-items:flex-start;gap:6px}}
+/* ---------- Боковое меню помещается по высоте без полосы прокрутки ---------- */
+.side__panel{height:100vh;height:100dvh;gap:clamp(12px,2.4vh,26px);padding-top:calc(clamp(12px,2.4vh,22px) + env(safe-area-inset-top,0px));padding-bottom:calc(clamp(14px,2.6vh,28px) + env(safe-area-inset-bottom,0px));scrollbar-width:none;-ms-overflow-style:none}
+.side__panel::-webkit-scrollbar{display:none}
+.nav{gap:0}
+.nav>button,.nav summary{padding:clamp(5px,1vh,9px) 0}
+.nav .sub{padding:0 0 clamp(4px,.8vh,8px) 28px}
+.nav .sub button{padding:clamp(3px,.65vh,6px) 0}
+.side__contact{gap:clamp(4px,.7vh,8px)}
+.socials a,.socials span{width:clamp(36px,4.6vh,42px);height:clamp(36px,4.6vh,42px)}
+@media(max-height:700px){.side__contact span:last-child{display:none}}
+@media(max-height:600px){.meta-note{font-size:11px}}
+@media(max-height:620px){.side__panel{gap:10px}.nav>button,.nav summary{font-size:15px}.socials a,.socials span{width:34px;height:34px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style>
 
@@ -856,7 +868,7 @@ $('#mPre').onclick=()=>{closeModal();toast('Заявка на предзаказ
 
 /* ---------- Боковое меню ---------- */
 const side=$('#side');
-function openMenu(){side.classList.add('open');$('#menuOpen').setAttribute('aria-expanded','true');document.body.classList.add('lock');setTimeout(()=>$('#menuClose').focus(),300)}
+function openMenu(){const cat=side.querySelector('.nav details');if(cat)cat.open=innerHeight>=780;side.classList.add('open');$('#menuOpen').setAttribute('aria-expanded','true');document.body.classList.add('lock');setTimeout(()=>$('#menuClose').focus(),300)}
 function closeMenu(){side.classList.remove('open');$('#menuOpen').setAttribute('aria-expanded','false');document.body.classList.remove('lock')}
 $('#menuOpen').onclick=openMenu;$('#menuClose').onclick=closeMenu;
 side.addEventListener('click',e=>{if(e.target.closest('[data-close]'))closeMenu()});
