@@ -5,7 +5,7 @@
 <meta name="description" content="mulifeyn — фарфоровые украшения ручной работы">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,300;1,400&family=Great+Vibes&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,300;1,400&family=Onest:wght@400;500;600&display=swap">
 <style>
 /* Layout: белая витрина в духе ателье. Фото на всю ширину, тонкий курсив для акцентов,
    сетка карточек на тонких линиях, тёмный подвал и боковое меню. Звёздочки цвета глазури — только в прелоадере. */
@@ -20,7 +20,6 @@
   --cobalt:#25348c;
   --glaze-red:#d4402f;
   --f-italic:"Cormorant","Times New Roman",serif;
-  --f-script:"Great Vibes","Cormorant",cursive;
   --f-body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
   --gut:max(16px,env(safe-area-inset-left,0px));
   --gut-r:max(16px,env(safe-area-inset-right,0px));
@@ -40,9 +39,9 @@ button{background:none;border:0;cursor:pointer;padding:0}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
 .pad{padding-left:var(--gut);padding-right:var(--gut-r)}
-.it{font-family:var(--f-italic);font-style:italic;font-weight:300;letter-spacing:-.005em}
+.it{font-family:var(--f-italic);font-style:normal;font-weight:500;letter-spacing:.005em}
 /* каллиграфия для заголовков, как у Souris */
-h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-script);font-style:normal;font-weight:400;letter-spacing:0}
+h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-italic);font-style:normal;font-weight:500;letter-spacing:.01em}
 .link{display:inline-block;font:500 15px/1 var(--f-body);padding-bottom:6px;border-bottom:1.5px solid currentColor;transition:opacity .2s}
 .link:hover{opacity:.65}
 .btn{height:48px;padding:0 26px;background:var(--ink);color:#fff;font:500 15px/1 var(--f-body);transition:background .2s}
@@ -53,9 +52,13 @@ h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-script);font-style:normal;font-
 /* ---------- Прелоадер ---------- */
 .loader{position:fixed;inset:0;z-index:100;background:var(--paper);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
 .loader canvas{position:absolute;inset:0;width:100%;height:100%}
-.loader__in{position:relative;display:grid;justify-items:center;gap:14px;opacity:0;animation:fadeUp 1s .2s ease forwards}
-.loader__in img{width:min(56vw,300px)}
-.loader__in span{font-size:clamp(20px,2.4vw,26px);color:var(--muted)}
+.loader__in{position:relative;display:grid;justify-items:center;gap:18px;padding-inline:24px;text-align:center}
+.loader__in img{width:min(56vw,280px);clip-path:inset(0 100% 0 0);animation:reveal 1.1s .25s cubic-bezier(.7,0,.2,1) forwards}
+.loader__line{display:block;width:min(46vw,220px);height:1px;background:var(--ink);transform:scaleX(0);animation:grow 1.6s .7s cubic-bezier(.7,0,.2,1) forwards}
+.loader__txt{font:400 clamp(13px,1.2vw,15px)/1.5 var(--f-body);letter-spacing:.08em;color:var(--ink)}
+.loader__txt i{font-style:normal;display:inline-block;opacity:0;transform:translateY(6px);animation:fadeUp .5s ease forwards}
+@keyframes reveal{to{clip-path:inset(0 0 0 0)}}
+@keyframes grow{to{transform:scaleX(1)}}
 .loader.done{opacity:0;visibility:hidden}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
@@ -278,7 +281,7 @@ section{scroll-margin-top:76px}
 .res:hover span{text-decoration:underline;text-underline-offset:3px}
 .search__none{padding:28px 0;color:var(--muted);font-size:14px}
 
-/* ---------- Индивидуальный заказ ---------- */
+/* ---------- Предзаказ (окно) ---------- */
 .custom .modal__box{width:min(560px,100%);grid-template-columns:1fr}
 .custom__in{padding:clamp(28px,4vw,48px);display:grid;gap:18px}
 .custom__in h3{margin:0;font-size:var(--h);line-height:1.15}
@@ -294,6 +297,22 @@ section{scroll-margin-top:76px}
 .custom .btn{width:100%}
 .custom__ok{display:grid;gap:14px;justify-items:center;text-align:center;padding:24px 0}
 .custom__ok p{margin:0;color:var(--muted)}
+
+/* ---------- Кнопки в карточках ---------- */
+.card{display:flex;flex-direction:column}
+.card__open{flex:1}
+.card__act{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 16px 18px;flex-wrap:wrap}
+.card__stock{font-size:12px;color:var(--muted)}
+.card__stock--on{color:#3d7a4f}
+.card__btn{height:36px;padding:0 16px;background:var(--ink);color:#fff;font-size:13px;transition:background .2s}
+.card__btn:hover{background:#333}
+.card__btn--ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.card__btn--ghost:hover{background:var(--ink);color:#fff}
+@media(max-width:699px){.card__act{padding:0 10px 14px;flex-direction:column;align-items:stretch;gap:8px}.card__btn{width:100%}}
+.pre__item{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center;padding:10px 0;border-block:1px solid var(--line)}
+.pre__item img{width:64px;height:72px;object-fit:contain}
+.pre__item div{display:grid;gap:4px;font-size:14px}.pre__item b{font-weight:500}
+.pre__item span{color:var(--muted)}
 
 /* ---------- Корзина и избранное ---------- */
 .drawer{position:fixed;inset:0;z-index:85;visibility:hidden}
@@ -390,7 +409,7 @@ body{font-size:var(--t)}
 <!-- Прелоадер -->
 <div class="loader" id="loader" aria-hidden="true">
   <canvas id="stars"></canvas>
-  <div class="loader__in"><img src="site/img/logo.svg" alt=""><span class="it">фарфор, расписанный вручную</span></div>
+  <div class="loader__in"><img src="site/img/logo.svg" alt=""><span class="loader__line"></span><span class="loader__txt" id="loaderTxt">Фарфоровые украшения для хорошего настроения</span></div>
 </div>
 
 <header class="hdr" id="hdr">
@@ -445,7 +464,6 @@ body{font-size:var(--t)}
         </div>
       </details>
       <button data-go="about" data-k="about" data-cap="О бренде">О бренде</button>
-      <button data-custom data-k="about" data-cap="Индивидуальный заказ">Индивидуальный заказ</button>
       <button data-go="contacts" data-k="def" data-cap="Напишите нам">Контакты</button>
     </nav>
     <div class="side__contact">
@@ -471,7 +489,7 @@ body{font-size:var(--t)}
     <div class="hero__foot">
       <h1 class="hero__title it">Фарфор, расписанный вручную</h1>
       <p>Кольца, браслеты, ожерелья и серьги из фарфора с росписью, золотом и платиной</p>
-      <div class="hero__links"><button class="link" data-go="catalog">Перейти в каталог</button><button class="link" data-custom>Индивидуальный заказ</button></div>
+      <div class="hero__links"><button class="link" data-go="catalog">Перейти в каталог</button></div>
     </div>
     <span class="video-note">Здесь будет видео с изделиями</span>
   </section>
@@ -483,7 +501,7 @@ body{font-size:var(--t)}
       <p>Каждое изделие лепится и расписывается вручную, поэтому двух одинаковых не бывает</p>
       <div class="filters" role="group" aria-label="Категории" id="filters"></div>
     </div>
-    <div class="pad"><div class="grid" id="grid"></div></div>
+    <div class="grid" id="grid"></div>
   </section>
 
   <!-- Новая коллекция -->
@@ -502,7 +520,6 @@ body{font-size:var(--t)}
       <h2 class="it" id="aboutT">О бренде</h2>
       <p>Все изделия изготавливаются из фарфора кропотливо вручную и проходят много этапов создания, прежде чем обретут свою конечную форму.</p>
       <p class="about__quote it">Украшения mulifeyn созданы, чтобы просто дарить вам хорошее настроение и новый опыт</p>
-      <button class="btn btn--ghost" data-custom>Индивидуальный заказ</button>
       <div class="facts">
         <div><b>Фарфор</b><span>основа изделий</span></div>
         <div><b>Вручную</b><span>лепка и роспись</span></div>
@@ -597,7 +614,6 @@ body{font-size:var(--t)}
         <li><button data-go="catalog" data-filter="all">Каталог</button></li>
         <li><button data-go="about">О бренде</button></li>
         <li><button data-go="buyers">Покупателям</button></li>
-        <li><button data-custom>Индивидуальный заказ</button></li>
         <li><button data-go="contacts">Контакты</button></li>
       </ul>
       <ul>
@@ -656,19 +672,21 @@ body{font-size:var(--t)}
   </div>
 </div>
 
-<!-- Индивидуальный заказ -->
+<!-- Предзаказ -->
 <div class="modal custom" id="custom" role="dialog" aria-modal="true" aria-labelledby="customT">
   <div class="modal__box">
     <button class="modal__x" data-cclose aria-label="Закрыть"></button>
     <div class="custom__in" id="customIn">
-      <h3 class="it" id="customT">Индивидуальный заказ</h3>
-      <p>Расскажите, какое украшение хотите: роспись, цвет, надпись или размер. Мы свяжемся с вами и обсудим детали.</p>
+      <h3 class="it" id="customT">Предзаказ</h3>
+      <div class="pre__item"><img id="preImg" src="site/img/p-ring.jpg" alt=""><div><b id="preName">Изделие</b><span id="prePrice"></span></div></div>
+      <p>Этого изделия сейчас нет в наличии. Оставьте контакты, и мы изготовим его для вас. Обычно это занимает около месяца.</p>
       <form id="customForm" novalidate style="display:grid;gap:18px">
         <div class="fld"><label for="cName">Имя</label><input id="cName" autocomplete="name" placeholder="Как к вам обращаться"><small></small></div>
         <div class="fld"><label for="cPhone">Телефон</label><input id="cPhone" type="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__"><small></small></div>
-        <div class="fld"><label for="cText">Что хотите заказать</label><textarea id="cText" placeholder="Например: кольцо с синим сердцем и надписью, размер 17"></textarea><small></small></div>
+        <div class="fld" id="preSizeF"><label>Размер кольца</label><div class="sizes" id="preSizes"></div></div>
+        <div class="fld"><label for="cText">Комментарий (по желанию)</label><textarea id="cText" placeholder="Например: удобнее связаться в Telegram"></textarea><small></small></div>
         <label class="chk" for="cAgree"><input type="checkbox" id="cAgree" checked><span>Я согласен(на) на обработку персональных данных и ознакомлен(а) с <u>политикой конфиденциальности</u></span></label>
-        <button class="btn" type="submit">Отправить заявку</button>
+        <button class="btn" type="submit">Оформить предзаказ</button>
       </form>
     </div>
   </div>
@@ -712,25 +730,27 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- Прелоадер: мерцающие звёздочки ---------- */
 const loader=$('#loader'), cv=$('#stars'), ctx=cv.getContext('2d');
-const colors=['#c9a14a','#c9a14a','#25348c','#d4402f','#e2c37a'];
+const colors=['#111111'];
+/* текст под логотипом появляется по буквам */
+{const el=$('#loaderTxt'),txt=el.textContent;el.innerHTML=[...txt].map((c,i)=>c===' '?' ':`<i style="animation-delay:${(1.1+i*.025).toFixed(3)}s">${c}</i>`).join('')}
 let W,H,stars=[],raf,t0=performance.now();
 function resize(){const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);
   const n=Math.round(Math.min(70,W*H/14000));stars=[];
   for(let i=0;i<n;i++){let x,y;do{x=Math.random()*W;y=Math.random()*H}while(Math.abs(x-W/2)<Math.min(200,W*.32)&&Math.abs(y-H/2)<70);
-    stars.push({x,y,r:4+Math.random()*Math.random()*14,c:colors[i%colors.length],p:Math.random()*6.28,s:1.2+Math.random()*2.4,d:Math.random()*900})}}
-function star(x,y,r){ctx.beginPath();ctx.moveTo(x,y-r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.quadraticCurveTo(x,y,x,y+r);ctx.quadraticCurveTo(x,y,x-r,y);ctx.quadraticCurveTo(x,y,x,y-r);ctx.fill()}
+    stars.push({x,y,a0:Math.random()*Math.PI,r:3+Math.random()*Math.random()*12,c:colors[i%colors.length],p:Math.random()*6.28,s:1.2+Math.random()*2.4,d:Math.random()*900})}}
+function star(x,y,r,a){ctx.save();ctx.translate(x,y);ctx.rotate(a||0);ctx.translate(-x,-y);ctx.beginPath();ctx.moveTo(x,y-r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.quadraticCurveTo(x,y,x,y+r);ctx.quadraticCurveTo(x,y,x-r,y);ctx.quadraticCurveTo(x,y,x,y-r);ctx.fill();ctx.restore()}
 function frame(now){const t=now-t0;ctx.clearRect(0,0,W,H);
   for(const s of stars){const a=Math.min(1,Math.max(0,(t-s.d)/500)),k=(Math.sin(t/1000*s.s+s.p)+1)/2;
-    ctx.globalAlpha=a*(.15+.85*k);ctx.fillStyle=s.c;star(s.x,s.y,s.r*(.45+.55*k)*a)}
+    ctx.globalAlpha=a*(.15+.85*k);ctx.fillStyle=s.c;star(s.x,s.y,s.r*(.45+.55*k)*a,s.a0+t/4000*(s.s>2.4?1:-1))}
   ctx.globalAlpha=1;raf=requestAnimationFrame(frame)}
 resize();addEventListener('resize',resize);
 if(reduce){stars.forEach(s=>s.d=0);frame(t0);cancelAnimationFrame(raf)}else raf=requestAnimationFrame(frame);
 let gone=false;
 function hideLoader(){if(gone)return;gone=true;loader.classList.add('done');setTimeout(()=>{cancelAnimationFrame(raf);loader.remove();showCookie()},800)}
-const minShow=reduce?300:2400;
+const minShow=reduce?300:3200;
 const ready=()=>setTimeout(hideLoader,Math.max(0,minShow-(performance.now()-t0)));
 document.readyState==='complete'?ready():addEventListener('load',ready);
-setTimeout(hideLoader,5000);loader.addEventListener('click',hideLoader);
+setTimeout(hideLoader,6000);loader.addEventListener('click',hideLoader);
 
 /* ---------- Видео на первом экране (пока только мобильное) ---------- */
 const hv=$('#heroVideo'),mq=matchMedia('(max-width: 699px)');
@@ -750,14 +770,14 @@ const TYPES={ring:'Кольцо',bracelet:'Браслет',necklace:'Ожере�
 const P=[
  {id:1,t:'ring',n:'«Сердце в золоте»',p:4200,img:'p-ring',d:'Белое кольцо с красными полосами и сердцем в золотом контуре.'},
  {id:2,t:'necklace',n:'«Жемчужный шар»',p:6800,img:'p-necklace',d:'Речной жемчуг, голубой ангелит и фарфоровая бусина с кобальтовыми полосами на золотом замке.'},
- {id:3,t:'ring',n:'«Amore»',p:3900,img:'p-ring',d:'Сердце в золотом контуре и тонкая красная роспись.'},
+ {id:3,t:'ring',n:'«Amore»',p:3900,img:'p-ring',pre:true,d:'Сердце в золотом контуре и тонкая красная роспись.'},
  {id:4,t:'necklace',n:'«Ривьера»',p:7200,img:'p-necklace',d:'Жемчуг, голубые бусины и подвеска из расписного фарфора.'},
  {id:5,t:'ring',n:'«Валентинка»',p:4500,img:'p-ring',pre:true,d:'Кольцо с сердцем под заказ, изготовление около месяца.'},
- {id:6,t:'necklace',n:'«Морской бриз»',p:6500,img:'p-necklace',d:'Нежный жемчуг и фарфоровая бусина в морскую полоску.'},
+ {id:6,t:'necklace',n:'«Морской бриз»',p:6500,img:'p-necklace',pre:true,d:'Нежный жемчуг и фарфоровая бусина в морскую полоску.'},
  {id:7,t:'ring',n:'«Красная нить»',p:3700,img:'p-ring',d:'Красные полосы и сердце, покрытое золотом.'},
  {id:8,t:'necklace',n:'«Голубая лагуна»',p:6900,img:'p-necklace',pre:true,d:'Ожерелье с голубыми бусинами под заказ.'},
  {id:9,t:'ring',n:'«Любовь»',p:4100,img:'p-ring',d:'Фарфор, ручная роспись, золотое сердце.'},
- {id:10,t:'necklace',n:'«Барокко»',p:7500,img:'p-necklace',d:'Барочный жемчуг и фарфоровый шар с росписью.'},
+ {id:10,t:'necklace',n:'«Барокко»',p:7500,img:'p-necklace',pre:true,d:'Барочный жемчуг и фарфоровый шар с росписью.'},
  {id:11,t:'ring',n:'«Полоска»',p:3500,img:'p-ring',d:'Лаконичные красные полосы и сердце.'},
  {id:12,t:'necklace',n:'«Жемчуг и кобальт»',p:7100,img:'p-necklace',d:'Жемчуг, золотая фурнитура и кобальтовая роспись.'},
 ];
@@ -770,7 +790,8 @@ grid.innerHTML=P.map(p=>`<div class="card" data-t="${p.t}">
    <span class="card__img"><img src="site/img/${p.img}.jpg" alt="${TYPES[p.t]} ${p.n}" loading="lazy">
 </span>
    <span class="card__body"><span class="card__name">${TYPES[p.t]} ${p.n}</span><span class="card__price">${rub(p.p)}</span></span>
-  </button></div>`).join('')+`<div class="empty" id="empty" hidden><span class="it">Скоро здесь</span>Изделия появятся после съёмки. Предзаказ можно оформить в Telegram @mulifeynn</div>`;
+  </button>
+  <div class="card__act">${p.pre?`<span class="card__stock">Нет в наличии</span><button class="card__btn card__btn--ghost" data-pre="${p.id}">Предзаказ</button>`:`<span class="card__stock card__stock--on">В наличии</span><button class="card__btn" data-tocart="${p.id}">В корзину</button>`}</div></div>`).join('')+`<div class="empty" id="empty" hidden><span class="it">Скоро здесь</span>Изделия появятся после съёмки. Предзаказ можно оформить в Telegram @mulifeynn</div>`;
 
 const F=[['all','Все'],['ring','Кольца'],['bracelet','Браслеты'],['necklace','Ожерелья'],['earrings','Серьги']];
 $('#filters').innerHTML=F.map(([k,l])=>`<button data-f="${k}" aria-pressed="${k==='all'}">${l}</button>`).join('');
@@ -782,6 +803,7 @@ $('#filters').addEventListener('click',e=>{const b=e.target.closest('button');if
 let favs=new Set(),cart=new Map(),tt;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2200)}
 grid.addEventListener('click',e=>{
+  const tc=e.target.closest('[data-tocart]');if(tc){const p=P.find(x=>x.id===+tc.dataset.tocart);addToCart(p.id,p.t==='ring'?'17':'');toast(`${p.n} в корзине`);return}
   const f=e.target.closest('[data-fav]');
   if(f){toggleFav(+f.dataset.fav);return}
   const o=e.target.closest('[data-open]');if(o)openModal(+o.dataset.open)});
@@ -833,22 +855,26 @@ srch.addEventListener('click',e=>{if(e.target.closest('[data-sclose]'))return cl
   const h=e.target.closest('[data-q]');if(h){sIn.value=h.dataset.q;runSearch();sIn.focus();return}
   const o=e.target.closest('[data-sopen]');if(o){closeSearch();openModal(+o.dataset.sopen)}});
 
-/* ---------- Индивидуальный заказ ---------- */
-const cst=$('#custom'),cIn=$('#customIn'),cFormHTML=cIn.innerHTML;
-function openCustom(){if(side.classList.contains('open'))closeMenu();cst.classList.add('open');document.body.classList.add('lock');setTimeout(()=>{const n=$('#cName');n&&n.focus()},250)}
-function closeCustom(){cst.classList.remove('open');document.body.classList.remove('lock');setTimeout(()=>{cIn.innerHTML=cFormHTML;bindCustom()},350)}
-document.addEventListener('click',e=>{if(e.target.closest('[data-custom]')){e.preventDefault();openCustom()}});
-cst.addEventListener('click',e=>{if(e.target===cst||e.target.closest('[data-cclose]'))closeCustom()});
+/* ---------- Предзаказ ---------- */
+const cst=$('#custom'),cIn=$('#customIn'),cFormHTML=cIn.innerHTML;let preCur=null;
+function openPre(id){preCur=P.find(p=>p.id===id);if(side.classList.contains('open'))closeMenu();
+  cIn.innerHTML=cFormHTML;bindCustom();
+  $('#preImg').src=`site/img/${preCur.img}.jpg`;$('#preName').textContent=`${TYPES[preCur.t]} ${preCur.n}`;$('#prePrice').textContent=rub(preCur.p);
+  $('#preSizeF').hidden=preCur.t!=='ring';
+  $('#preSizes').innerHTML=['15','16','16,5','17','17,5','18','19'].map((s,i)=>`<button type="button" aria-pressed="${i===3}">${s}</button>`).join('');
+  cst.classList.add('open');document.body.classList.add('lock');setTimeout(()=>{const n=$('#cName');n&&n.focus()},250)}
+function closeCustom(){cst.classList.remove('open');if(!modal.classList.contains('open'))document.body.classList.remove('lock')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pre]');if(b){e.preventDefault();e.stopPropagation();openPre(+b.dataset.pre)}},true);
+cst.addEventListener('click',e=>{if(e.target===cst||e.target.closest('[data-cclose]'))return closeCustom();
+  const sz=e.target.closest('#preSizes button');if(sz)$$('#preSizes button').forEach(x=>x.setAttribute('aria-pressed',x===sz))});
 function bindCustom(){const f=$('#customForm');if(!f)return;
   f.addEventListener('submit',e=>{e.preventDefault();let ok=true;
     const chk=(id,test,msg)=>{const el=$(id),w=el.closest('.fld'),bad=!test(el.value.trim());w.classList.toggle('err',bad);w.querySelector('small').textContent=bad?msg:'';if(bad)ok=false};
     chk('#cName',v=>v.length>1,'Напишите, как к вам обращаться');
     chk('#cPhone',v=>v.replace(/\D/g,'').length>=10,'Введите номер телефона, например +7 900 000-00-00');
-    chk('#cText',v=>v.length>2,'Опишите коротко, что хотите заказать');
     if(!$('#cAgree').checked){ok=false;toast('Нужно согласие на обработку данных')}
     if(!ok)return;
-    cIn.innerHTML='<div class="custom__ok"><h3 class="it" style="margin:0;font-size:var(--h)">Спасибо!</h3><p>Заявка отправлена. Мы свяжемся с вами в Telegram или по телефону, чтобы обсудить детали.</p><p style="font-size:12px">Это макет: на готовом сайте заявка придёт на почту или в Telegram.</p><button class="btn" data-cclose style="width:auto">Хорошо</button></div>'})}
-bindCustom();
+    cIn.innerHTML=`<div class="custom__ok"><h3 class="it" style="margin:0;font-size:var(--h)">Спасибо!</h3><p>Предзаказ на «${preCur.n.replace(/[«»]/g,'')}» принят. Мы свяжемся с вами в Telegram или по телефону, чтобы подтвердить детали и срок.</p><p style="font-size:12px">Это макет: на готовом сайте заявка придёт на почту или в Telegram.</p><button class="btn" data-cclose style="width:auto">Хорошо</button></div>`})}
 addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(srch.classList.contains('open'))closeSearch();if(cst.classList.contains('open'))closeCustom()});
 
 /* ---------- Окно товара ---------- */
@@ -858,13 +884,13 @@ function openModal(id){cur=P.find(p=>p.id===id);lastFocus=document.activeElement
   $('#mType').textContent=TYPES[cur.t]+(cur.pre?' · под заказ':' · в наличии');$('#mName').textContent=cur.n;$('#mPrice').textContent=rub(cur.p);$('#mDesc').textContent=cur.d+' Фарфор, ручная роспись.';
   $('#mSizesWrap').hidden=cur.t!=='ring';
   $('#mSizes').innerHTML=['15','16','16,5','17','17,5','18','19'].map((s,i)=>`<button aria-pressed="${i===3}">${s}</button>`).join('');
-  $('#mAdd').hidden=!!cur.pre;
+  $('#mAdd').hidden=!!cur.pre;$('#mPre').hidden=!cur.pre;
   modal.classList.add('open');document.body.classList.add('lock');setTimeout(()=>$('#mClose').focus(),50)}
 function closeModal(){modal.classList.remove('open');document.body.classList.remove('lock');lastFocus&&lastFocus.focus()}
 $('#mSizes').addEventListener('click',e=>{const b=e.target.closest('button');if(b)$$('#mSizes button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
 $('#mClose').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
 $('#mAdd').onclick=()=>{const sz=cur.t==='ring'?($('#mSizes [aria-pressed=true]')||{}).textContent:'';addToCart(cur.id,sz);closeModal();toast(`${cur.n} в корзине`)};
-$('#mPre').onclick=()=>{closeModal();toast('Заявка на предзаказ: напишем вам в Telegram')};
+$('#mPre').onclick=()=>{const id=cur.id;closeModal();setTimeout(()=>openPre(id),50)};
 
 /* ---------- Боковое меню ---------- */
 const side=$('#side');
