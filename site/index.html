@@ -51,8 +51,7 @@ h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-italic);font-style:normal;font-
 .loader{position:fixed;inset:0;z-index:100;background:var(--paper);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
 .loader canvas{position:absolute;inset:0;width:100%;height:100%}
 .loader__in{position:relative;display:grid;justify-items:center;gap:18px;padding-inline:24px;text-align:center}
-.loader__in img{width:min(60vw,300px);opacity:0;filter:blur(14px);transform:scale(.94);clip-path:inset(0 50% 0 50%);animation:logoIn 1.6s .3s cubic-bezier(.2,.7,.2,1) forwards}
-@keyframes logoIn{60%{opacity:1}to{opacity:1;filter:blur(0);transform:none;clip-path:inset(0 0 0 0)}}
+.loader__in img{width:min(56vw,280px);clip-path:inset(0 100% 0 0);animation:reveal 1.1s .25s cubic-bezier(.7,0,.2,1) forwards}
 .loader__line{display:block;width:min(46vw,220px);height:1px;background:var(--ink);transform:scaleX(0);animation:grow 1.6s .7s cubic-bezier(.7,0,.2,1) forwards}
 .loader__txt{font:400 clamp(13px,1.2vw,15px)/1.5 var(--f-body);letter-spacing:.08em;color:var(--ink)}
 .loader__txt i{font-style:normal;display:inline-block;opacity:0;transform:translateY(6px);animation:fadeUp .5s ease forwards}
