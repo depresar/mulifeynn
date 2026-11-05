@@ -51,7 +51,8 @@ h1.it,h2.it,h3.it,.side__cap{font-family:var(--f-italic);font-style:normal;font-
 .loader{position:fixed;inset:0;z-index:100;background:var(--paper);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
 .loader canvas{position:absolute;inset:0;width:100%;height:100%}
 .loader__in{position:relative;display:grid;justify-items:center;gap:18px;padding-inline:24px;text-align:center}
-.loader__in img{width:min(56vw,280px);clip-path:inset(0 100% 0 0);animation:reveal 1.1s .25s cubic-bezier(.7,0,.2,1) forwards}
+.loader__in img{width:min(60vw,300px);opacity:0;filter:blur(14px);transform:scale(.94);clip-path:inset(0 50% 0 50%);animation:logoIn 1.6s .3s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes logoIn{60%{opacity:1}to{opacity:1;filter:blur(0);transform:none;clip-path:inset(0 0 0 0)}}
 .loader__line{display:block;width:min(46vw,220px);height:1px;background:var(--ink);transform:scaleX(0);animation:grow 1.6s .7s cubic-bezier(.7,0,.2,1) forwards}
 .loader__txt{font:400 clamp(13px,1.2vw,15px)/1.5 var(--f-body);letter-spacing:.08em;color:var(--ink)}
 .loader__txt i{font-style:normal;display:inline-block;opacity:0;transform:translateY(6px);animation:fadeUp .5s ease forwards}
@@ -407,7 +408,7 @@ body{font-size:var(--t)}
 <!-- Прелоадер -->
 <div class="loader" id="loader" aria-hidden="true">
   <canvas id="stars"></canvas>
-  <div class="loader__in"><img src="img/logo.svg" alt=""><span class="loader__line"></span><span class="loader__txt" id="loaderTxt">Фарфоровые украшения для хорошего настроения</span></div>
+  <div class="loader__in"><img src="img/logo.svg" alt=""></div>
 </div>
 
 <header class="hdr" id="hdr">
@@ -676,7 +677,7 @@ body{font-size:var(--t)}
     <button class="modal__x" data-cclose aria-label="Закрыть"></button>
     <div class="custom__in" id="customIn">
       <h3 class="it" id="customT">Предзаказ</h3>
-      <div class="pre__item"><img id="preImg" src="img/p-ring.jpg" alt=""><div><b id="preName">Изделие</b><span id="prePrice"></span></div></div>
+      <div class="pre__item"><img id="preImg" src="img/p-ring-heart-gold.jpg" alt=""><div><b id="preName">Изделие</b><span id="prePrice"></span></div></div>
       <p>Этого изделия сейчас нет в наличии. Оставьте контакты, и мы изготовим его для вас. Обычно это занимает около месяца.</p>
       <form id="customForm" novalidate style="display:grid;gap:18px">
         <div class="fld"><label for="cName">Имя</label><input id="cName" autocomplete="name" placeholder="Как к вам обращаться"><small></small></div>
@@ -729,8 +730,6 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------- Прелоадер: мерцающие звёздочки ---------- */
 const loader=$('#loader'), cv=$('#stars'), ctx=cv.getContext('2d');
 const colors=['#111111'];
-/* текст под логотипом появляется по буквам */
-{const el=$('#loaderTxt'),txt=el.textContent;el.innerHTML=[...txt].map((c,i)=>c===' '?' ':`<i style="animation-delay:${(1.1+i*.025).toFixed(3)}s">${c}</i>`).join('')}
 let W,H,stars=[],raf,t0=performance.now();
 function resize(){const d=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);
   const n=Math.round(Math.min(70,W*H/14000));stars=[];
@@ -745,7 +744,7 @@ resize();addEventListener('resize',resize);
 if(reduce){stars.forEach(s=>s.d=0);frame(t0);cancelAnimationFrame(raf)}else raf=requestAnimationFrame(frame);
 let gone=false;
 function hideLoader(){if(gone)return;gone=true;loader.classList.add('done');setTimeout(()=>{cancelAnimationFrame(raf);loader.remove();showCookie()},800)}
-const minShow=reduce?300:3200;
+const minShow=reduce?300:2800;
 const ready=()=>setTimeout(hideLoader,Math.max(0,minShow-(performance.now()-t0)));
 document.readyState==='complete'?ready():addEventListener('load',ready);
 setTimeout(hideLoader,6000);loader.addEventListener('click',hideLoader);
@@ -766,18 +765,18 @@ addEventListener('scroll',onScroll,{passive:true});onScroll();
 /* ---------- Товары (примерные) ---------- */
 const TYPES={ring:'Кольцо',bracelet:'Браслет',necklace:'Ожерелье',earrings:'Серьги'};
 const P=[
- {id:1,t:'ring',n:'«Сердце в золоте»',p:4200,img:'p-ring',d:'Белое кольцо с красными полосами и сердцем в золотом контуре.'},
- {id:2,t:'necklace',n:'«Жемчужный шар»',p:6800,img:'p-necklace',d:'Речной жемчуг, голубой ангелит и фарфоровая бусина с кобальтовыми полосами на золотом замке.'},
- {id:3,t:'ring',n:'«Amore»',p:3900,img:'p-ring',pre:true,d:'Сердце в золотом контуре и тонкая красная роспись.'},
- {id:4,t:'necklace',n:'«Ривьера»',p:7200,img:'p-necklace',d:'Жемчуг, голубые бусины и подвеска из расписного фарфора.'},
- {id:5,t:'ring',n:'«Валентинка»',p:4500,img:'p-ring',pre:true,d:'Кольцо с сердцем под заказ, изготовление около месяца.'},
- {id:6,t:'necklace',n:'«Морской бриз»',p:6500,img:'p-necklace',pre:true,d:'Нежный жемчуг и фарфоровая бусина в морскую полоску.'},
- {id:7,t:'ring',n:'«Красная нить»',p:3700,img:'p-ring',d:'Красные полосы и сердце, покрытое золотом.'},
- {id:8,t:'necklace',n:'«Голубая лагуна»',p:6900,img:'p-necklace',pre:true,d:'Ожерелье с голубыми бусинами под заказ.'},
- {id:9,t:'ring',n:'«Любовь»',p:4100,img:'p-ring',d:'Фарфор, ручная роспись, золотое сердце.'},
- {id:10,t:'necklace',n:'«Барокко»',p:7500,img:'p-necklace',pre:true,d:'Барочный жемчуг и фарфоровый шар с росписью.'},
- {id:11,t:'ring',n:'«Полоска»',p:3500,img:'p-ring',d:'Лаконичные красные полосы и сердце.'},
- {id:12,t:'necklace',n:'«Жемчуг и кобальт»',p:7100,img:'p-necklace',d:'Жемчуг, золотая фурнитура и кобальтовая роспись.'},
+ {id:1,t:'ring',n:'«Сердце»',p:4800,img:'p-ring-heart-gold',d:'Белое фарфоровое кольцо-печатка с объёмным красным сердцем и четырьмя золотыми шариками.'},
+ {id:2,t:'ring',n:'«Ромашка»',p:4200,img:'p-ring-flower',d:'Белое фарфоровое кольцо с объёмным цветком и золотой серединкой.'},
+ {id:3,t:'ring',n:'«Компас любви»',p:5200,img:'p-ring-heart-gold',pre:true,d:'Печатка с красным сердцем и золотыми акцентами по сторонам света.'},
+ {id:4,t:'ring',n:'«Белый цветок»',p:3900,img:'p-ring-flower',d:'Лаконичное белое кольцо с цветком и золотой бусиной.'},
+ {id:5,t:'ring',n:'«Валентинка»',p:4900,img:'p-ring-heart-gold',d:'Красное сердце в белом фарфоре и золото.'},
+ {id:6,t:'ring',n:'«Весна»',p:4100,img:'p-ring-flower',pre:true,d:'Фарфоровый цветок с золотой серединкой.'},
+ {id:7,t:'ring',n:'«Amore»',p:5000,img:'p-ring-heart-gold',d:'Объёмное сердце и золотые шарики на белой печатке.'},
+ {id:8,t:'ring',n:'«Маргаритка»',p:4300,img:'p-ring-flower',d:'Белый цветок и золото, ручная работа.'},
+ {id:9,t:'ring',n:'«Сердце в золоте»',p:5400,img:'p-ring-heart-gold',pre:true,d:'Печатка с сердцем и четырьмя золотыми шариками.'},
+ {id:10,t:'ring',n:'«Нежность»',p:4000,img:'p-ring-flower',d:'Белое кольцо с цветком, покрытым глазурью.'},
+ {id:11,t:'ring',n:'«Любовь»',p:4700,img:'p-ring-heart-gold',d:'Фарфор, красное сердце и золото.'},
+ {id:12,t:'ring',n:'«Солнечный цветок»',p:4400,img:'p-ring-flower',pre:true,d:'Цветок с золотой серединкой на белом фарфоре.'},
 ];
 const rub=n=>n.toLocaleString('ru-RU')+' р.';
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.3C19.5 15.4 12 20 12 20z"/></svg>';
